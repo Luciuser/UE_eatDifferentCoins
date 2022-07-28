@@ -15,6 +15,7 @@ class EATDIFFERENTCOINS_API ACoin : public AActor
 public:	
 	// Sets default values for this actor's properties
 	ACoin();
+
 	UPROPERTY(VisibleAnywhere)
 		UStaticMeshComponent* VisualMesh;	// 静态网格体，直接读取圆柱体模型
 
@@ -36,10 +37,6 @@ public:
 	UPROPERTY(EditAnywhere)
 		FName CoinType = FName("GOLD");	// 硬币种类，默认为金币
 
-	// 碰撞函数
-	UFUNCTION()
-		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -47,5 +44,9 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	// 碰撞函数
+	UFUNCTION()
+		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 };

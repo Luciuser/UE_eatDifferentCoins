@@ -52,10 +52,16 @@ void ACoin::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherA
 		ACharacter *playerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);	// 获取玩家类
 		AeatDifferentCoinsCharacter *eatCoinPlayerCharacter = Cast<AeatDifferentCoinsCharacter>(playerCharacter);	// 强制类型转换为子类
 
-		//PRINT(FString::FromInt(eatCoinPlayerCharacter->GoldCoinValue));
-		eatCoinPlayerCharacter->addCharacterCoin(this->CoinType, this->CoinValue);	// 增加子类的硬币数量
-		//PRINT(FString::FromInt(eatCoinPlayerCharacter->GoldCoinValue));
-		this->Destroy();	// 删除硬币实例
+		if (eatCoinPlayerCharacter != nullptr) {
+			//PRINT(FString::FromInt(eatCoinPlayerCharacter->GoldCoinValue));
+			eatCoinPlayerCharacter->addCharacterCoin(this->CoinType, this->CoinValue);	// 增加子类的硬币数量
+			//PRINT(FString::FromInt(eatCoinPlayerCharacter->GoldCoinValue));
+			this->Destroy();	// 删除硬币实例
+		}
+		else {
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("WRONG while finding AeatDifferentCoinsCharacter"));
+		}
+
 	}
 }
 
@@ -63,10 +69,6 @@ void ACoin::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherA
 void ACoin::BeginPlay()
 {
 	Super::BeginPlay();
-	//VisualMesh->SetMaterial(0, Material); // TODO，设置材质，好像没用
-	//DrawDebugBox(GetWorld(), GetActorLocation(), FVector(100, 100, 100), FColor::White, true, -1, 0, 10); // 绘制包围盒大小
-
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Black, TEXT("Hello World"));
 }
 
 // Called every frame

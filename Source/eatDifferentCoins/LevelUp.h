@@ -4,9 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "LevelUp.generated.h"
 #include "Materials/Material.h"
-
+#include "LevelUp.generated.h"
 
 UCLASS()
 class EATDIFFERENTCOINS_API ALevelUp : public AActor
@@ -20,9 +19,6 @@ public:
 	UPROPERTY(VisibleAnywhere)
 		UStaticMeshComponent* VisualMesh;	// 静态网格体，直接读取圆锥模型
 
-	UPROPERTY(EditAnywhere)
-		UMaterial* Material;	// 静态网格体材质，在UE界面中设置
-
 	UPROPERTY()
 		class UBoxComponent* BoxComponent;	// 碰撞包围盒
 
@@ -32,10 +28,6 @@ public:
 	UPROPERTY(EditAnywhere)
 		FName NextLevel = FName("Game_Menu");	// 下一关关卡名，默认为 Game_Menu
 
-	// 碰撞函数
-	UFUNCTION()
-		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -43,5 +35,9 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	// 碰撞函数
+	UFUNCTION()
+		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 };
