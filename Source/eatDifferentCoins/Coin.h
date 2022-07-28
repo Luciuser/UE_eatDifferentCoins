@@ -26,10 +26,10 @@ public:
 		class UBoxComponent* BoxComponent;	// 碰撞包围盒
 
 	UPROPERTY(EditAnywhere)
-		float HeightMoveSpeed = 100;	// 硬币纵向跳动速度，默认为20
+		float HeightMove = 40;	// 硬币纵向跳动高度，默认为40
 
 	UPROPERTY(EditAnywhere)
-		float RotationSpeed = 75;	// 硬币纵向跳动速度，默认为20
+		float RotationSpeed = 75;	// 硬币旋转速度，默认为75
 
 	UPROPERTY(EditAnywhere)
 		int CoinValue = 1;	// 硬币数量，默认为1

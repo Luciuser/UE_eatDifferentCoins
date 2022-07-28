@@ -82,7 +82,7 @@ void ACoin::Tick(float DeltaTime)
 	float RunningTime = GetGameTimeSinceCreation();
 	float DeltaHeight = (FMath::Sin(RunningTime + DeltaTime) - FMath::Sin(RunningTime));
 
-	NewLocation.Z += DeltaHeight * HeightMoveSpeed;	// 硬币随时间跳动
+	NewLocation.Z += DeltaHeight * HeightMove;	// 硬币随时间跳动
 	float DeltaRotation = DeltaTime * RotationSpeed;// 硬币随时间旋转
 	NewRotation.Yaw += DeltaRotation;
 	
