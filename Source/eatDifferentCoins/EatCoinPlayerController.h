@@ -18,15 +18,6 @@ class EATDIFFERENTCOINS_API AEatCoinPlayerController : public APlayerController
 public:
 	AEatCoinPlayerController();
 
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	//	TSubclassOf<UUserWidget>HUDAssert;
-
-	UPROPERTY()
-		TSubclassOf<UUserWidget> HUDAsset;
-
-	UPROPERTY()
-		UUserWidget* HUD;
-
 protected:
 	virtual void BeginPlay() override;
 };

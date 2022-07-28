@@ -11,6 +11,5 @@ AEatCoinGameMode::AEatCoinGameMode()
 	// 设置新的 GamePlayerController 和 GameState
 	GameStateClass = AEatCoinGameState::StaticClass();
 	PlayerControllerClass = AEatCoinPlayerController::StaticClass();
-	//HUDClass = AEatCoinHUD::StaticClass();
 	HUDClass = AEatCoinHUD::StaticClass();
 }

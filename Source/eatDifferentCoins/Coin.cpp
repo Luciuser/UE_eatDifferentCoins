@@ -86,7 +86,7 @@ void ACoin::Tick(float DeltaTime)
 	float DeltaRotation = DeltaTime * RotationSpeed;// 硬币随时间旋转
 	NewRotation.Yaw += DeltaRotation;
 	
-	SetActorLocationAndRotation(NewLocation, NewRotation);
+	SetActorLocationAndRotation(NewLocation, NewRotation);	// 设置位置及旋转
 
 }
 

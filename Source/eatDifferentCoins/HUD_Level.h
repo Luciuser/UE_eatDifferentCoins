@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "Components/TextBlock.h"
+//#include "eatDifferentCoinsCharacter.h"
 #include "HUD_Level.generated.h"
 
 /**
@@ -17,6 +19,14 @@ class EATDIFFERENTCOINS_API UHUD_Level : public UUserWidget
 public:
 	virtual bool Initialize() override;
 
+	//void updateUI();	// 更新UI
+
 	//页面控件
-	class UTextBlock* TxtMenuTitle;
+	UTextBlock* TextTotalCoin;
+	UTextBlock* TextGoldCoin;
+	UTextBlock* TextSliverCoin;
+	UTextBlock* TextCopperCoin;
+	UTextBlock* TextMission;
+
+	//AeatDifferentCoinsCharacter *eatCoinPlayerCharacter;	// 玩家类
 };

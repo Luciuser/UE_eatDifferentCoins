@@ -1,10 +1,14 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "eatDifferentCoinsCharacter.h"
+#include "HUD_Level.h"
+#include "EatCoinHUD.h"
+#include "Kismet/GameplayStatics.h"
 #include "HeadMountedDisplayFunctionLibrary.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
+#include "GameFramework/GameModeBase.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -45,6 +49,7 @@ AeatDifferentCoinsCharacter::AeatDifferentCoinsCharacter()
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
+
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -79,6 +84,7 @@ void AeatDifferentCoinsCharacter::SetupPlayerInputComponent(class UInputComponen
 
 void AeatDifferentCoinsCharacter::addCharacterCoin(FName Name, int value)
 {
+	// 增加人物存储数据
 	if (Name == FName("GOLD")) {
 		this->GoldCoinValue += value;
 	}
@@ -88,6 +94,26 @@ void AeatDifferentCoinsCharacter::addCharacterCoin(FName Name, int value)
 	if (Name == FName("COPPER")) {
 		this->CopperCoinValue += value;
 	}
+	this->CoinValue++;
+
+	// 修改HUD
+	AEatCoinHUD *EatCoinHUD = Cast<AEatCoinHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());	// 获取当前 UI 控件
+	UHUD_Level *HUD = nullptr;
+	if (EatCoinHUD != nullptr) {
+		HUD = EatCoinHUD->HUDWidget;
+	}
+
+	if (HUD != nullptr) {
+		HUD->TextTotalCoin->SetText(FText::FromString(FString::FromInt(this->CoinValue)));
+		HUD->TextGoldCoin->SetText(FText::FromString(FString::FromInt(this->GoldCoinValue)));
+		//HUD->TextSliverCoin->SetText(FText::FromString(FString::FromInt(this->SliverCoinValue)));	// 好像还有问题，TODO
+		HUD->TextCopperCoin->SetText(FText::FromString(FString::FromInt(this->CopperCoinValue)));
+		HUD->TextMission->SetText(FText::FromString("test"));
+	}
+	else {
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("why happened"));
+	}
+
 }
 
 void AeatDifferentCoinsCharacter::OnResetVR()

@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameFramework/HUD.h"
 #include "GameFramework/Character.h"
 #include "eatDifferentCoinsCharacter.generated.h"
 
@@ -30,11 +31,13 @@ public:
 	float BaseLookUpRate;
 
 	UPROPERTY(EditAnywhere)
-		int GoldCoinValue = 0;	// 金币数量，默认为0
+		int CoinValue = 100;	// 钱币价值，默认为0
 	UPROPERTY(EditAnywhere)
-		int SliverCoinValue = 0;	// 银币数量，默认为0
+		int GoldCoinValue = 50;	// 金币数量，默认为0
 	UPROPERTY(EditAnywhere)
-		int CopperCoinValue = 0;	// 铜币数量，默认为0
+		int SliverCoinValue = 40;	// 银币数量，默认为0
+	UPROPERTY(EditAnywhere)
+		int CopperCoinValue = 30;	// 铜币数量，默认为0
 	UFUNCTION()
 		void addCharacterCoin(FName Name, int value);	// 增加玩家身上的各种金币数量
 
