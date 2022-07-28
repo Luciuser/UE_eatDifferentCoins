@@ -77,6 +77,19 @@ void AeatDifferentCoinsCharacter::SetupPlayerInputComponent(class UInputComponen
 }
 
 
+void AeatDifferentCoinsCharacter::addCharacterCoin(FName Name, int value)
+{
+	if (Name == FName("GOLD")) {
+		this->GoldCoinValue += value;
+	}
+	if (Name == FName("SLIVER")) {
+		this->SliverCoinValue += value;
+	}
+	if (Name == FName("COPPER")) {
+		this->CopperCoinValue += value;
+	}
+}
+
 void AeatDifferentCoinsCharacter::OnResetVR()
 {
 	// If eatDifferentCoins is added to a project via 'Add Feature' in the Unreal Editor the dependency on HeadMountedDisplay in eatDifferentCoins.Build.cs is not automatically propagated

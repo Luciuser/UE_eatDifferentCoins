@@ -1,9 +1,13 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "Coin.h"
+#include "eatDifferentCoinsCharacter.h"
+#include "Engine/EngineTypes.h"
 #include "DrawDebugHelpers.h"
 #include "Components/BoxComponent.h"
+#include "Kismet/GameplayStatics.h"
+
+#define PRINT(String) {if (GEngine){GEngine->AddOnScreenDebugMessage(-1,10.0f,FColor::Red,*(String));}}
 
 // Sets default values
 ACoin::ACoin()
@@ -15,24 +19,54 @@ ACoin::ACoin()
 	VisualMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	VisualMesh->SetupAttachment(RootComponent);
 
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> CubeVisualAsset(TEXT("/Game/ThirdPerson/Coins/Shape_Cylinder.Shape_Cylinder"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> CubeVisualAsset(TEXT("/Game/ThirdPerson/Coins/Shape_Cylinder.Shape_Cylinder"));	// 读取静态网格体资源
 
 	if (CubeVisualAsset.Succeeded())
 	{
 		VisualMesh->SetStaticMesh(CubeVisualAsset.Object);
 		VisualMesh->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
+		VisualMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);	// 关闭静态网格体的碰撞
 	}
 
-	// 材质
+	// 碰撞包围盒
+	BoxComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxComponent"));
+	BoxComponent->InitBoxExtent(FVector(100, 100, 100));	// 包围盒范围
+	BoxComponent->SetRelativeLocation(GetActorLocation());	// 包围盒与静态网格体位于同一原点
+	BoxComponent->SetCollisionProfileName("Trigger");
+	BoxComponent->SetupAttachment(VisualMesh);
+
+	BoxComponent->OnComponentBeginOverlap.AddDynamic(this, &ACoin::OnOverlapBegin);
+	//VisualMesh->OnComponentBeginOverlap.AddDynamic(this, &ACoin::OnOverlapBegin);
+
+	// 材质，好像没用，TODO
 	Material = CreateDefaultSubobject<UMaterial>(TEXT("Material"));
-	VisualMesh->SetMaterial(0, Material); // TODO，设置材质，好像没用
+}
+
+// 包围盒碰撞函数
+void ACoin::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+{
+	if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr))
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("OverLap happened"));
+
+		ACharacter *playerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);	// 获取玩家类
+		AeatDifferentCoinsCharacter *eatCoinPlayerCharacter = Cast<AeatDifferentCoinsCharacter>(playerCharacter);	// 强制类型转换为子类
+
+		//PRINT(FString::FromInt(eatCoinPlayerCharacter->GoldCoinValue));
+		eatCoinPlayerCharacter->addCharacterCoin(this->CoinType, this->CoinValue);	// 增加子类的硬币数量
+		//PRINT(FString::FromInt(eatCoinPlayerCharacter->GoldCoinValue));
+		this->Destroy();	// 删除硬币实例
+	}
 }
 
 // Called when the game starts or when spawned
 void ACoin::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	//VisualMesh->SetMaterial(0, Material); // TODO，设置材质，好像没用
+	//DrawDebugBox(GetWorld(), GetActorLocation(), FVector(100, 100, 100), FColor::White, true, -1, 0, 10); // 绘制包围盒大小
+
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Black, TEXT("Hello World"));
 }
 
 // Called every frame

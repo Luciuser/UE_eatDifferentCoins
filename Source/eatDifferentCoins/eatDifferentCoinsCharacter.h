@@ -29,6 +29,15 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseLookUpRate;
 
+	UPROPERTY(EditAnywhere)
+		int GoldCoinValue = 0;	// 金币数量，默认为0
+	UPROPERTY(EditAnywhere)
+		int SliverCoinValue = 0;	// 银币数量，默认为0
+	UPROPERTY(EditAnywhere)
+		int CopperCoinValue = 0;	// 铜币数量，默认为0
+	UFUNCTION()
+		void addCharacterCoin(FName Name, int value);	// 增加玩家身上的各种金币数量
+
 protected:
 
 	/** Resets HMD orientation in VR. */

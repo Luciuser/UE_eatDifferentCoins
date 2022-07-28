@@ -22,13 +22,23 @@ public:
 		UMaterial* Material;	// 静态网格体材质，在UE界面中设置
 
 	UPROPERTY()
-		class UBoxComponent* MyBoxComponent;	// 碰撞包围盒
+		class UBoxComponent* BoxComponent;	// 碰撞包围盒
 
 	UPROPERTY(EditAnywhere)
-		float HeightMoveSpeed = 20;	// 硬币纵向跳动速度，默认为20
+		float HeightMoveSpeed = 100;	// 硬币纵向跳动速度，默认为20
 
 	UPROPERTY(EditAnywhere)
-		float RotationSpeed = 20;	// 硬币纵向跳动速度，默认为20
+		float RotationSpeed = 75;	// 硬币纵向跳动速度，默认为20
+
+	UPROPERTY(EditAnywhere)
+		int CoinValue = 1;	// 硬币数量，默认为1
+
+	UPROPERTY(EditAnywhere)
+		FName CoinType = FName("GOLD");	// 硬币种类，默认为金币
+
+	// 碰撞函数
+	UFUNCTION()
+		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 protected:
 	// Called when the game starts or when spawned
