@@ -89,8 +89,13 @@ void AeatDifferentCoinsCharacter::SetupPlayerInputComponent(class UInputComponen
 
 void AeatDifferentCoinsCharacter::OnQuit()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Game Quit."));
+	AEatCoinPlayerController *EatCoinPlayerController = Cast<AEatCoinPlayerController>(UGameplayStatics::GetPlayerController(this, 0));
+	if (EatCoinPlayerController != nullptr) {
+		EatCoinPlayerController->Save();
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Game Quit."));
 
+		UKismetSystemLibrary::QuitGame(this, EatCoinPlayerController, EQuitPreference::Quit, false);
+	}
 }
 
 void AeatDifferentCoinsCharacter::addCharacterCoin(FName Name, int value)

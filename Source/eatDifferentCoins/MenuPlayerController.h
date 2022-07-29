@@ -16,4 +16,6 @@ class EATDIFFERENTCOINS_API AMenuPlayerController : public APlayerController
 	
 public:
 	AMenuPlayerController();
+
+	void Load();
 };

@@ -25,6 +25,8 @@ public:
 		UButton* ButtonLoadGame;
 	//UPROPERTY(meta = (BindWidget))
 		UButton* ButtonQuit;
+		
+	FName FirstLevel = FName("Level_1");	// 第一关关卡
 
 	UFUNCTION()
 		void ButtonStartGameClickEvent();

@@ -2,6 +2,8 @@
 
 
 #include "HUD_Menu.h"
+#include "MenuPlayerController.h"
+#include "Kismet/GameplayStatics.h"
 
 bool UHUD_Menu::Initialize() {
 	Super::Initialize();
@@ -31,11 +33,21 @@ bool UHUD_Menu::Initialize() {
 void UHUD_Menu::ButtonStartGameClickEvent()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Game Start."));
+	UWorld* world = GetWorld();
+	UGameplayStatics::OpenLevel(world, this->FirstLevel);	 // 进入第一关
 }
 
 void UHUD_Menu::ButtonLoadGameClickEvent()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Game Load."));
+
+	AMenuPlayerController *MenuPlayerController = Cast<AMenuPlayerController>(UGameplayStatics::GetPlayerController(this, 0));
+	if (MenuPlayerController != nullptr) {
+		MenuPlayerController->Load();
+	}
+	UWorld* world = GetWorld();
+	UGameplayStatics::OpenLevel(world, this->FirstLevel);	 // 进入第一关
+
 }
 
 void UHUD_Menu::ButtonQuitClickEvent()

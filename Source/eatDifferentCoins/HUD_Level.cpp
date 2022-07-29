@@ -2,6 +2,7 @@
 
 
 #include "HUD_Level.h"
+#include "MyGameInstance.h"
 #include "Kismet/GameplayStatics.h"
 
 #define LOCTEXT_NAMESPACE "EAT_COIN"
@@ -18,9 +19,13 @@ bool UHUD_Level::Initialize() {
 	TextCopperCoin = Cast<UTextBlock>(GetWidgetFromName("Text_Get_Copper_Coin"));
 	TextMission = Cast<UTextBlock>(GetWidgetFromName("Text_Get_Mission"));
 
-	if (TextTotalCoin != nullptr) {
-		TextTotalCoin->SetText(LOCTEXT("0", "0"));
+	// 从 GameInstance 获取数据
+	UWorld* world = GetWorld();
+	UMyGameInstance *MyGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(world)); // 获取当前GameInstance
+	if (MyGameInstance != nullptr && TextTotalCoin != nullptr) {
+		TextTotalCoin->SetText(FText::FromString(FString::FromInt(MyGameInstance->CoinValue)));
 	}
+	// 设置 UI 默认值
 	if (TextGoldCoin != nullptr) {
 		TextGoldCoin->SetText(LOCTEXT("0", "0"));
 	}

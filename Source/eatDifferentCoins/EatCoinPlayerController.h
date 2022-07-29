@@ -21,6 +21,12 @@ public:
 protected:
 
 	virtual void BeginPlay() override;
-	
+
 public:
+
+	// 保存游戏函数
+	void Save();
+
+	// 退出游戏函数
+	void Load();
 };
