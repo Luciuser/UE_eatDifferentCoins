@@ -24,9 +24,13 @@ void AMenuPlayerController::Load()
 	UWorld* world = GetWorld();
 	UMyGameInstance *MyGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(world)); // 获取当前GameInstance
 	MyGameInstance->CoinValue = SaveGameInstance->CoinValue;
+	MyGameInstance->CurrentLevel = SaveGameInstance->CurrentLevel;
 	
 	PRINT(FString::FromInt(SaveGameInstance->CoinValue));
 	PRINT(FString::FromInt(MyGameInstance->CoinValue));
+	PRINT(SaveGameInstance->CurrentLevel.ToString());
+	PRINT(MyGameInstance->CurrentLevel.ToString());
+
 	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Green, TEXT("Load Game"));
 
 }

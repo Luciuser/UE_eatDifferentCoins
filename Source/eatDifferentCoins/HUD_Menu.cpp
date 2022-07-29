@@ -3,7 +3,10 @@
 
 #include "HUD_Menu.h"
 #include "MenuPlayerController.h"
+#include "MyGameInstance.h"
 #include "Kismet/GameplayStatics.h"
+
+#define PRINT(String) {if (GEngine){GEngine->AddOnScreenDebugMessage(-1,10.0f,FColor::Red,*(String));}}
 
 bool UHUD_Menu::Initialize() {
 	Super::Initialize();
@@ -34,7 +37,13 @@ void UHUD_Menu::ButtonStartGameClickEvent()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Game Start."));
 	UWorld* world = GetWorld();
+	// 将当前关卡赋给 GameInstance
+	UMyGameInstance *MyGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(world)); // 获取当前GameInstance
+	if (MyGameInstance != nullptr) {
+		MyGameInstance->CurrentLevel = this->FirstLevel;
+	}
 	UGameplayStatics::OpenLevel(world, this->FirstLevel);	 // 进入第一关
+
 }
 
 void UHUD_Menu::ButtonLoadGameClickEvent()
@@ -46,7 +55,10 @@ void UHUD_Menu::ButtonLoadGameClickEvent()
 		MenuPlayerController->Load();
 	}
 	UWorld* world = GetWorld();
-	UGameplayStatics::OpenLevel(world, this->FirstLevel);	 // 进入第一关
+	UMyGameInstance *MyGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(world)); // 获取当前GameInstance
+	//PRINT(MyGameInstance->CurrentLevel.ToString());
+	//UGameplayStatics::OpenLevel(world, this->FirstLevel);	 // 进入第一关
+	UGameplayStatics::OpenLevel(world, MyGameInstance->CurrentLevel);	 // 进入存储的关卡
 
 }
 

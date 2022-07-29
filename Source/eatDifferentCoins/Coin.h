@@ -19,9 +19,6 @@ public:
 	UPROPERTY(VisibleAnywhere)
 		UStaticMeshComponent* VisualMesh;	// 静态网格体，直接读取圆柱体模型
 
-	UPROPERTY(EditAnywhere)
-		UMaterial* Material;	// 静态网格体材质，在UE界面中设置
-
 	UPROPERTY()
 		class UBoxComponent* BoxComponent;	// 碰撞包围盒
 

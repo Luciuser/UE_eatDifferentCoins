@@ -3,7 +3,9 @@
 
 #include "LevelUp.h"
 #include "eatDifferentCoinsCharacter.h"
+#include "MyGameInstance.h"
 #include "EatCoinGameState.h"
+#include "EatCoinGameMode.h"
 #include "Engine/EngineTypes.h"
 #include "DrawDebugHelpers.h"
 #include "Components/BoxComponent.h"
@@ -45,18 +47,27 @@ void ALevelUp::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * Oth
 {
 	if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr))
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("level"));
+		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("level"));
 
-		AGameStateBase *gameStateBase = UGameplayStatics::GetGameState(GetWorld());	// 获取游戏数据类
-		AEatCoinGameState *eatCoinGameState = Cast<AEatCoinGameState>(gameStateBase);	// 强制类型转换为子类
-		
+		//AGameStateBase *gameStateBase = UGameplayStatics::GetGameState(GetWorld());	// 获取游戏数据类
+		//AEatCoinGameState *eatCoinGameState = Cast<AEatCoinGameState>(gameStateBase);	// 强制类型转换为子类
 		UWorld* world = GetWorld();
+		AEatCoinGameMode *EatCoinGameMode = Cast<AEatCoinGameMode>(UGameplayStatics::GetGameMode(world));	// 获取GameMode类
 
-		if (eatCoinGameState != nullptr) {
-			//PRINT(FString::FromInt(eatCoinGameState->LevelSuccess));
-			eatCoinGameState->CoinTest();
-			//PRINT(FString::FromInt(eatCoinGameState->LevelSuccess));
-			if (eatCoinGameState->LevelSuccess) {
+		UMyGameInstance *MyGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(world)); // 获取当前GameInstance
+
+		if (EatCoinGameMode != nullptr) {
+			PRINT(FString::FromInt(EatCoinGameMode->LevelSuccess));
+			PRINT(MyGameInstance->CurrentLevel.ToString());
+			// 判断是否成功
+			EatCoinGameMode->CoinTest(MyGameInstance->CurrentLevel);
+			PRINT(FString::FromInt(EatCoinGameMode->LevelSuccess));
+			if (EatCoinGameMode->LevelSuccess) {
+				EatCoinGameMode->LevelSuccess = false;
+				// 将当前关卡赋给 GameInstance
+				if (MyGameInstance != nullptr) {
+					MyGameInstance->CurrentLevel = this->NextLevel;
+				}
 				//UGameplayStatics::SetGlobalTimeDilation(world, 0.2);	// 设置全局时间膨胀
 				//FPlatformProcess::Sleep(0.5);
 				//PRINT(FString::FromInt(eatCoinGameState->LevelSuccess));

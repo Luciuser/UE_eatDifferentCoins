@@ -17,4 +17,12 @@ class EATDIFFERENTCOINS_API AEatCoinGameMode : public AGameModeBase
 public:
 	AEatCoinGameMode();
 	
+	UPROPERTY(EditAnywhere)
+		bool LevelSuccess = false; // 当前关卡是否成功，默认为false
+
+	UFUNCTION()
+		void CoinTest(FName CurrentLevelName);
+
+	UFUNCTION()
+		FText MissionText(FName CurrentLevelName);
 };

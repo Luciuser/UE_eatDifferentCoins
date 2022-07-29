@@ -3,6 +3,7 @@
 
 #include "HUD_Level.h"
 #include "MyGameInstance.h"
+#include "EatCoinGameMode.h"
 #include "Kismet/GameplayStatics.h"
 
 #define LOCTEXT_NAMESPACE "EAT_COIN"
@@ -22,21 +23,23 @@ bool UHUD_Level::Initialize() {
 	// 从 GameInstance 获取数据
 	UWorld* world = GetWorld();
 	UMyGameInstance *MyGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(world)); // 获取当前GameInstance
+	AEatCoinGameMode *EatCoinGameMode = Cast<AEatCoinGameMode>(UGameplayStatics::GetGameMode(world));	// 获取GameMode类
+
 	if (MyGameInstance != nullptr && TextTotalCoin != nullptr) {
 		TextTotalCoin->SetText(FText::FromString(FString::FromInt(MyGameInstance->CoinValue)));
 	}
 	// 设置 UI 默认值
 	if (TextGoldCoin != nullptr) {
-		TextGoldCoin->SetText(LOCTEXT("0", "0"));
+		TextGoldCoin->SetText(FText::FromString("0"));
 	}
 	if (TextSliverCoin != nullptr) {
-		TextSliverCoin->SetText(LOCTEXT("0", "0"));
+		TextSliverCoin->SetText(FText::FromString("0"));
 	}
 	if (TextCopperCoin != nullptr) {
-		TextCopperCoin->SetText(LOCTEXT("0", "0"));
+		TextCopperCoin->SetText(FText::FromString("0"));
 	}
 	if (TextMission != nullptr) {
-		TextMission->SetText(LOCTEXT("Mission: collect five gold coin", "Mission: collect five gold coin"));
+		TextMission->SetText(EatCoinGameMode->MissionText(MyGameInstance->CurrentLevel));
 	}
 
 	//updateUI();

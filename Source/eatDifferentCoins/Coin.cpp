@@ -40,7 +40,7 @@ ACoin::ACoin()
 	//VisualMesh->OnComponentBeginOverlap.AddDynamic(this, &ACoin::OnOverlapBegin);
 
 	// 材质，好像没用，TODO
-	Material = CreateDefaultSubobject<UMaterial>(TEXT("Material"));
+	//Material = CreateDefaultSubobject<UMaterial>(TEXT("Material"));
 }
 
 // 包围盒碰撞函数
@@ -71,7 +71,6 @@ void ACoin::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherA
 		else {
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("WRONG while finding MyGameInstance"));
 		}
-
 
 		this->Destroy();	// 删除硬币实例
 	}

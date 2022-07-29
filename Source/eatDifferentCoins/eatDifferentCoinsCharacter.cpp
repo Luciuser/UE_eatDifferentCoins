@@ -102,13 +102,13 @@ void AeatDifferentCoinsCharacter::addCharacterCoin(FName Name, int value)
 {
 	// 增加人物存储数据
 	if (Name == FName("GOLD")) {
-		this->GoldCoinValue += value;
+		this->GoldCoinValue ++;
 	}
 	if (Name == FName("SLIVER")) {
-		this->SliverCoinValue += value;
+		this->SliverCoinValue ++;
 	}
 	if (Name == FName("COPPER")) {
-		this->CopperCoinValue += value;
+		this->CopperCoinValue ++;
 	}
 	//this->CoinValue++;
 

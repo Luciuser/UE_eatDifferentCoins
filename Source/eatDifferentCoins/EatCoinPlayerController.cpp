@@ -28,6 +28,7 @@ void AEatCoinPlayerController::Save()
 	UMyGameInstance *MyGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(world)); // 获取当前GameInstance
 	
 	SaveGameInstance->CoinValue = MyGameInstance->CoinValue;
+	SaveGameInstance->CurrentLevel = MyGameInstance->CurrentLevel;
 
 	UGameplayStatics::SaveGameToSlot(SaveGameInstance, TEXT("MySlot"), 0);	// 保存到插槽中
 
@@ -44,6 +45,7 @@ void AEatCoinPlayerController::Load()
 	UMyGameInstance *MyGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(world)); // 获取当前GameInstance
 
 	MyGameInstance->CoinValue = SaveGameInstance->CoinValue;
+	MyGameInstance->CurrentLevel = SaveGameInstance->CurrentLevel;
 
 	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Green, TEXT("Load Game"));
 

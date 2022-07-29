@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "Components/TextBlock.h"
-//#include "eatDifferentCoinsCharacter.h"
 #include "HUD_Level.generated.h"
 
 /**
