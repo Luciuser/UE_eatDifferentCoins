@@ -3,6 +3,8 @@
 #include "eatDifferentCoinsCharacter.h"
 #include "HUD_Level.h"
 #include "EatCoinHUD.h"
+#include "EatCoinPlayerController.h"
+#include "MyGameInstance.h"
 #include "Kismet/GameplayStatics.h"
 #include "HeadMountedDisplayFunctionLibrary.h"
 #include "Camera/CameraComponent.h"
@@ -12,6 +14,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Containers/UnrealString.h"
 
 //////////////////////////////////////////////////////////////////////////
 // AeatDifferentCoinsCharacter
@@ -79,8 +82,16 @@ void AeatDifferentCoinsCharacter::SetupPlayerInputComponent(class UInputComponen
 
 	// VR headset functionality
 	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &AeatDifferentCoinsCharacter::OnResetVR);
+
+	// 绑定退出游戏函数
+	PlayerInputComponent->BindAction("Quit", IE_Pressed, this, &AeatDifferentCoinsCharacter::OnQuit);
 }
 
+void AeatDifferentCoinsCharacter::OnQuit()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Game Quit."));
+
+}
 
 void AeatDifferentCoinsCharacter::addCharacterCoin(FName Name, int value)
 {
@@ -94,7 +105,16 @@ void AeatDifferentCoinsCharacter::addCharacterCoin(FName Name, int value)
 	if (Name == FName("COPPER")) {
 		this->CopperCoinValue += value;
 	}
-	this->CoinValue++;
+	//this->CoinValue++;
+
+	//// 修改GameInstance
+	//UWorld* world = GetWorld();
+	////UGameplayStatics::GetGameInstance(world);
+	//UMyGameInstance *MyGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(world)); // 获取当前GameInstance
+	//if (MyGameInstance != nullptr) {
+	//	MyGameInstance->CoinValue = this->CoinValue;
+	//	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("just a teset"));
+	//}
 
 	// 修改HUD
 	AEatCoinHUD *EatCoinHUD = Cast<AEatCoinHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());	// 获取当前 UI 控件
@@ -104,14 +124,14 @@ void AeatDifferentCoinsCharacter::addCharacterCoin(FName Name, int value)
 	}
 
 	if (HUD != nullptr) {
-		HUD->TextTotalCoin->SetText(FText::FromString(FString::FromInt(this->CoinValue)));
+		//HUD->TextTotalCoin->SetText(FText::FromString(FString::FromInt(this->CoinValue)));
 		HUD->TextGoldCoin->SetText(FText::FromString(FString::FromInt(this->GoldCoinValue)));
-		//HUD->TextSliverCoin->SetText(FText::FromString(FString::FromInt(this->SliverCoinValue)));	// 好像还有问题，TODO
+		HUD->TextSliverCoin->SetText(FText::FromString(FString::FromInt(this->SliverCoinValue)));
 		HUD->TextCopperCoin->SetText(FText::FromString(FString::FromInt(this->CopperCoinValue)));
-		HUD->TextMission->SetText(FText::FromString("test"));
+		//HUD->TextMission->SetText(FText::FromString("test"));
 	}
 	else {
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("why happened"));
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("WRONG while finding HUD"));
 	}
 
 }

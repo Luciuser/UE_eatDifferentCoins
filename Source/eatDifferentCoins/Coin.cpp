@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Coin.h"
+#include "MyGameInstance.h"
 #include "eatDifferentCoinsCharacter.h"
 #include "Engine/EngineTypes.h"
 #include "DrawDebugHelpers.h"
@@ -49,19 +50,30 @@ void ACoin::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherA
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("OverLap happened"));
 
+		// 修改 PlayerCharacter 数据
 		ACharacter *playerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);	// 获取玩家类
 		AeatDifferentCoinsCharacter *eatCoinPlayerCharacter = Cast<AeatDifferentCoinsCharacter>(playerCharacter);	// 强制类型转换为子类
-
 		if (eatCoinPlayerCharacter != nullptr) {
 			//PRINT(FString::FromInt(eatCoinPlayerCharacter->GoldCoinValue));
 			eatCoinPlayerCharacter->addCharacterCoin(this->CoinType, this->CoinValue);	// 增加子类的硬币数量
 			//PRINT(FString::FromInt(eatCoinPlayerCharacter->GoldCoinValue));
-			this->Destroy();	// 删除硬币实例
 		}
 		else {
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("WRONG while finding AeatDifferentCoinsCharacter"));
 		}
 
+		// 修改 GameInstance 数据
+		UWorld* world = GetWorld();
+		UMyGameInstance *MyGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(world)); // 获取当前GameInstance
+		if (MyGameInstance != nullptr) {
+			MyGameInstance->addCoinValue(this->CoinType, this->CoinValue);	// 增加总金额数
+		}
+		else {
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("WRONG while finding MyGameInstance"));
+		}
+
+
+		this->Destroy();	// 删除硬币实例
 	}
 }
 

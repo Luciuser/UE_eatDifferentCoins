@@ -19,19 +19,19 @@ bool UHUD_Level::Initialize() {
 	TextMission = Cast<UTextBlock>(GetWidgetFromName("Text_Get_Mission"));
 
 	if (TextTotalCoin != nullptr) {
-		TextTotalCoin->SetText(LOCTEXT("9", "9"));
+		TextTotalCoin->SetText(LOCTEXT("0", "0"));
 	}
 	if (TextGoldCoin != nullptr) {
-		TextGoldCoin->SetText(LOCTEXT("2", "2"));
+		TextGoldCoin->SetText(LOCTEXT("0", "0"));
 	}
 	if (TextSliverCoin != nullptr) {
-		TextSliverCoin->SetText(LOCTEXT("6", "6"));
+		TextSliverCoin->SetText(LOCTEXT("0", "0"));
 	}
 	if (TextCopperCoin != nullptr) {
-		TextCopperCoin->SetText(LOCTEXT("4", "4"));
+		TextCopperCoin->SetText(LOCTEXT("0", "0"));
 	}
 	if (TextMission != nullptr) {
-		TextMission->SetText(LOCTEXT("5", "5"));
+		TextMission->SetText(LOCTEXT("Mission: collect five gold coin", "Mission: collect five gold coin"));
 	}
 
 	//updateUI();

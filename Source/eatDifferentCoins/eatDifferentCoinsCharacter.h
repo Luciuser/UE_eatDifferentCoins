@@ -30,14 +30,14 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseLookUpRate;
 
+	//UPROPERTY(EditAnywhere)
+	//	int CoinValue = 0;	// 钱币价值，默认为0
 	UPROPERTY(EditAnywhere)
-		int CoinValue = 100;	// 钱币价值，默认为0
+		int GoldCoinValue = 0;	// 金币数量，默认为0
 	UPROPERTY(EditAnywhere)
-		int GoldCoinValue = 50;	// 金币数量，默认为0
+		int SliverCoinValue = 0;	// 银币数量，默认为0
 	UPROPERTY(EditAnywhere)
-		int SliverCoinValue = 40;	// 银币数量，默认为0
-	UPROPERTY(EditAnywhere)
-		int CopperCoinValue = 30;	// 铜币数量，默认为0
+		int CopperCoinValue = 0;	// 铜币数量，默认为0
 	UFUNCTION()
 		void addCharacterCoin(FName Name, int value);	// 增加玩家身上的各种金币数量
 
@@ -69,6 +69,10 @@ protected:
 
 	/** Handler for when a touch input stops. */
 	void TouchStopped(ETouchIndex::Type FingerIndex, FVector Location);
+
+	/**游戏结束函数 */
+	void OnQuit();
+
 
 protected:
 	// APawn interface
