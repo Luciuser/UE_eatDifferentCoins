@@ -2,6 +2,7 @@
 
 #include "Coin.h"
 #include "MyGameInstance.h"
+#include "EatCoinGameMode.h"
 #include "eatDifferentCoinsCharacter.h"
 #include "Engine/EngineTypes.h"
 #include "DrawDebugHelpers.h"
@@ -68,12 +69,16 @@ void ACoin::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherA
 			// 修改 GameInstance 数据
 			UWorld* world = GetWorld();
 			UMyGameInstance *MyGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(world)); // 获取当前GameInstance
+			AEatCoinGameMode *EatCoinGameMode = Cast<AEatCoinGameMode>(UGameplayStatics::GetGameMode(world));	// 获取GameMode类
 			if (MyGameInstance != nullptr) {
 				MyGameInstance->addCoinValue(this->CoinType, this->CoinValue);	// 增加总金额数
 			}
 			else {
 				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("WRONG while finding MyGameInstance"));
 			}
+
+			EatCoinGameMode->CoinTest(MyGameInstance->CurrentLevel);
+			PRINT(FString::FromInt((int)EatCoinGameMode->LevelSuccess));
 
 			this->Destroy();	// 删除硬币实例
 		}

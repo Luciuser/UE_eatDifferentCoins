@@ -85,6 +85,8 @@ void AeatDifferentCoinsCharacter::SetupPlayerInputComponent(class UInputComponen
 
 	// 绑定退出游戏函数
 	PlayerInputComponent->BindAction("Quit", IE_Pressed, this, &AeatDifferentCoinsCharacter::OnQuit);
+	PlayerInputComponent->BindAction("Save", IE_Pressed, this, &AeatDifferentCoinsCharacter::OnSave);
+
 }
 
 void AeatDifferentCoinsCharacter::OnQuit()
@@ -95,6 +97,15 @@ void AeatDifferentCoinsCharacter::OnQuit()
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Game Quit."));
 
 		UKismetSystemLibrary::QuitGame(this, EatCoinPlayerController, EQuitPreference::Quit, false);
+	}
+}
+
+void AeatDifferentCoinsCharacter::OnSave()
+{
+	AEatCoinPlayerController *EatCoinPlayerController = Cast<AEatCoinPlayerController>(UGameplayStatics::GetPlayerController(this, 0));
+	if (EatCoinPlayerController != nullptr) {
+		EatCoinPlayerController->Save();
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Game Save."));
 	}
 }
 

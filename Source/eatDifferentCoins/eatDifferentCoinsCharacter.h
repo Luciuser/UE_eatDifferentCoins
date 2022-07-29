@@ -73,6 +73,8 @@ protected:
 	/**游戏结束函数 */
 	void OnQuit();
 
+	/**游戏保存函数 */
+	void OnSave();
 
 protected:
 	// APawn interface

@@ -65,4 +65,9 @@ void UHUD_Menu::ButtonLoadGameClickEvent()
 void UHUD_Menu::ButtonQuitClickEvent()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Game Quit."));
+	
+	AMenuPlayerController *MenuPlayerController = Cast<AMenuPlayerController>(UGameplayStatics::GetPlayerController(this, 0));
+	if (MenuPlayerController != nullptr) {
+		UKismetSystemLibrary::QuitGame(this, MenuPlayerController, EQuitPreference::Quit, false);
+	}
 }

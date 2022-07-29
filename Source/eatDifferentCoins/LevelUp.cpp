@@ -31,6 +31,7 @@ ALevelUp::ALevelUp()
 		VisualMesh->SetStaticMesh(CubeVisualAsset.Object);
 		VisualMesh->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
 		VisualMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);	// ¹Ø±Õ¾²Ì¬Íø¸ñÌåµÄÅö×²
+		//VisualMesh->SetVisibility(false);
 	}
 
 	// Åö×²°üÎ§ºÐ
@@ -85,7 +86,8 @@ void ALevelUp::BeginPlay()
 {
 	Super::BeginPlay();
 
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Black, TEXT("Hello World"));
+	
+	
 }
 
 // Called every frame
