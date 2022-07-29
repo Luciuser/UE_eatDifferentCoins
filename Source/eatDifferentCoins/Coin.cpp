@@ -48,31 +48,38 @@ void ACoin::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * OtherA
 {
 	if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr))
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("OverLap happened"));
-
-		// 修改 PlayerCharacter 数据
-		ACharacter *playerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);	// 获取玩家类
-		AeatDifferentCoinsCharacter *eatCoinPlayerCharacter = Cast<AeatDifferentCoinsCharacter>(playerCharacter);	// 强制类型转换为子类
+		AeatDifferentCoinsCharacter *eatCoinPlayerCharacter = Cast<AeatDifferentCoinsCharacter>(OtherActor); // 确定碰撞的对象
 		if (eatCoinPlayerCharacter != nullptr) {
-			//PRINT(FString::FromInt(eatCoinPlayerCharacter->GoldCoinValue));
+			//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("OverLap happened"));
+
+			//// 修改 PlayerCharacter 数据
+			//ACharacter *playerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);	// 获取玩家类
+			//AeatDifferentCoinsCharacter *eatCoinPlayerCharacter = Cast<AeatDifferentCoinsCharacter>(playerCharacter);	// 强制类型转换为子类
+			//if (eatCoinPlayerCharacter != nullptr) {
+			//	//PRINT(FString::FromInt(eatCoinPlayerCharacter->GoldCoinValue));
+			//	eatCoinPlayerCharacter->addCharacterCoin(this->CoinType, this->CoinValue);	// 增加子类的硬币数量
+			//	//PRINT(FString::FromInt(eatCoinPlayerCharacter->GoldCoinValue));
+			//}
+			//else {
+			//	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("WRONG while finding AeatDifferentCoinsCharacter"));
+			//}
 			eatCoinPlayerCharacter->addCharacterCoin(this->CoinType, this->CoinValue);	// 增加子类的硬币数量
-			//PRINT(FString::FromInt(eatCoinPlayerCharacter->GoldCoinValue));
+
+			// 修改 GameInstance 数据
+			UWorld* world = GetWorld();
+			UMyGameInstance *MyGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(world)); // 获取当前GameInstance
+			if (MyGameInstance != nullptr) {
+				MyGameInstance->addCoinValue(this->CoinType, this->CoinValue);	// 增加总金额数
+			}
+			else {
+				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("WRONG while finding MyGameInstance"));
+			}
+
+			this->Destroy();	// 删除硬币实例
 		}
 		else {
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("WRONG while finding AeatDifferentCoinsCharacter"));
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("is not player"));
 		}
-
-		// 修改 GameInstance 数据
-		UWorld* world = GetWorld();
-		UMyGameInstance *MyGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(world)); // 获取当前GameInstance
-		if (MyGameInstance != nullptr) {
-			MyGameInstance->addCoinValue(this->CoinType, this->CoinValue);	// 增加总金额数
-		}
-		else {
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("WRONG while finding MyGameInstance"));
-		}
-
-		this->Destroy();	// 删除硬币实例
 	}
 }
 

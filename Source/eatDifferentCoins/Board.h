@@ -37,6 +37,9 @@ public:
 	UPROPERTY(EditAnywhere)
 		float CurrentTime = 0;	// 板当前时间
 
+	UPROPERTY(EditAnywhere)
+		int DeltaTimeSign = 1;	// Delta时间的符号
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

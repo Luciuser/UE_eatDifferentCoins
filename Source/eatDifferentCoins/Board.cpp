@@ -38,36 +38,47 @@ void ABoard::Tick(float DeltaTime)
 
 	//PRINT(FString::FromInt((int)DeltaTime));
 
-	// 随时间移动
-	if (this->CurrentTime <= this->MoveTime) {
-		FVector NewLocation = GetActorLocation();
-		NewLocation.X += XMoveSpeed * this->CurrentTime;
-		NewLocation.Y += YMoveSpeed * this->CurrentTime;
-		NewLocation.Z += ZMoveSpeed * this->CurrentTime;
+	// 硬币随时间跳动并旋转
+	FVector NewLocation = GetActorLocation();
 
-		SetActorLocationAndRotation(NewLocation, GetActorRotation());	// 设置位置及旋转
-	}
-	else if (this->CurrentTime > this->MoveTime && 
-				this->CurrentTime <= this->MoveTime + this->StopTime) {
+	float RunningTime = GetGameTimeSinceCreation();
+	float DeltaHeight = (FMath::Sin(RunningTime + DeltaTime) - FMath::Sin(RunningTime));
 
-	}
-	else if (this->CurrentTime > this->MoveTime + this->StopTime && 
-				this->CurrentTime <= this->MoveTime * 2 + this->StopTime) {
-		FVector NewLocation = GetActorLocation();
-		NewLocation.X -= XMoveSpeed * (this->CurrentTime - this->MoveTime - this->StopTime);
-		NewLocation.Y -= YMoveSpeed * (this->CurrentTime - this->MoveTime - this->StopTime);
-		NewLocation.Z -= ZMoveSpeed * (this->CurrentTime - this->MoveTime - this->StopTime);
+	NewLocation.X += DeltaHeight * XMoveSpeed;	// 硬币随时间跳动
+	NewLocation.Y += DeltaHeight * YMoveSpeed;	// 硬币随时间跳动
+	NewLocation.Z += DeltaHeight * ZMoveSpeed;	// 硬币随时间跳动
 
-		SetActorLocationAndRotation(NewLocation, GetActorRotation());	// 设置位置及旋转
-	}
-	else if (this->CurrentTime > this->MoveTime * 2 + this->StopTime && 
-				this->CurrentTime <= this->MoveTime * 2 + this->StopTime * 2) {
+	SetActorLocationAndRotation(NewLocation, GetActorRotation());	// 设置位置及旋转
 
-	}
-	else {
-		this->CurrentTime = 0;
-	}
-	this->CurrentTime+=DeltaTime;
 
+	//if (this->CurrentTime <= this->MoveTime) {
+	//	FVector NewLocation = GetActorLocation();
+	//	NewLocation.X += XMoveSpeed * this->CurrentTime;
+	//	NewLocation.Y += YMoveSpeed * this->CurrentTime;
+	//	NewLocation.Z += ZMoveSpeed * this->CurrentTime;
+
+	//	SetActorLocationAndRotation(NewLocation, GetActorRotation());	// 设置位置及旋转
+	//}
+	//else if (this->CurrentTime > this->MoveTime &&
+	//	this->CurrentTime <= this->MoveTime + this->StopTime) {
+
+	//}
+	//else if (this->CurrentTime > this->MoveTime + this->StopTime &&
+	//	this->CurrentTime <= this->MoveTime * 2 + this->StopTime) {
+	//	FVector NewLocation = GetActorLocation();
+	//	NewLocation.X -= XMoveSpeed * (this->CurrentTime - this->MoveTime - this->StopTime);
+	//	NewLocation.Y -= YMoveSpeed * (this->CurrentTime - this->MoveTime - this->StopTime);
+	//	NewLocation.Z -= ZMoveSpeed * (this->CurrentTime - this->MoveTime - this->StopTime);
+
+	//	SetActorLocationAndRotation(NewLocation, GetActorRotation());	// 设置位置及旋转
+	//}
+	//else if (this->CurrentTime > this->MoveTime * 2 + this->StopTime &&
+	//	this->CurrentTime <= this->MoveTime * 2 + this->StopTime * 2) {
+
+	//}
+	//else {
+	//	this->CurrentTime = 0;
+	//}
+	//this->CurrentTime += DeltaTime;
 }
 
