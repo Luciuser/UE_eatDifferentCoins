@@ -37,7 +37,7 @@ void AEatCoinGameMode::CoinTest(FName CurrentLevelName)
 		}
 	}
 	if (CurrentLevelName == FName("Level_3")) {
-		if (MyGameInstance->CoinValue >= 20) {
+		if (MyGameInstance->CoinValue >= 30) {
 			this->LevelSuccess = true;
 		}
 	}

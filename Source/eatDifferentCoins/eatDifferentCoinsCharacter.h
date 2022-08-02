@@ -38,6 +38,8 @@ public:
 		int SliverCoinValue = 0;	// 银币数量，默认为0
 	UPROPERTY(EditAnywhere)
 		int CopperCoinValue = 0;	// 铜币数量，默认为0
+	UPROPERTY(EditAnywhere)
+		bool bPause = false;
 	UFUNCTION()
 		void addCharacterCoin(FName Name, int value);	// 增加玩家身上的各种金币数量
 
@@ -75,6 +77,12 @@ protected:
 
 	/**游戏保存函数 */
 	void OnSave();
+
+	/**游戏关卡函数 */
+	void OnRestart();
+
+	/**游戏暂停函数 */
+	void OnPause();
 
 protected:
 	// APawn interface

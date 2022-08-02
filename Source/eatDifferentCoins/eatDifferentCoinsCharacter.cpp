@@ -83,9 +83,12 @@ void AeatDifferentCoinsCharacter::SetupPlayerInputComponent(class UInputComponen
 	// VR headset functionality
 	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &AeatDifferentCoinsCharacter::OnResetVR);
 
-	// 绑定退出游戏函数
+	// 绑定自制输入
 	PlayerInputComponent->BindAction("Quit", IE_Pressed, this, &AeatDifferentCoinsCharacter::OnQuit);
 	PlayerInputComponent->BindAction("Save", IE_Pressed, this, &AeatDifferentCoinsCharacter::OnSave);
+	PlayerInputComponent->BindAction("Restart", IE_Pressed, this, &AeatDifferentCoinsCharacter::OnRestart);
+	PlayerInputComponent->BindAction("Pause", IE_Pressed, this, &AeatDifferentCoinsCharacter::OnPause).bExecuteWhenPaused = true;
+
 
 }
 
@@ -107,6 +110,27 @@ void AeatDifferentCoinsCharacter::OnSave()
 		EatCoinPlayerController->Save();
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Game Save."));
 	}
+}
+
+void AeatDifferentCoinsCharacter::OnRestart()
+{
+	UWorld* World = GetWorld();
+	UMyGameInstance *MyGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(World)); // 获取当前GameInstance
+	if (MyGameInstance != nullptr) {
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Game Restart."));
+		UGameplayStatics::OpenLevel(World, MyGameInstance->CurrentLevel);	 // 重新开启当前关卡
+	}
+}
+
+void AeatDifferentCoinsCharacter::OnPause()
+{
+	bPause = !bPause;
+
+	UGameplayStatics::SetGamePaused(this, bPause);	// 暂停游戏
+
+	//bShowMouseCursor = bPause;
+	//if (!bPause) SetInputMode(FInputModeGameOnly());
+	//SetPauseUIVisibility(bPause);
 }
 
 void AeatDifferentCoinsCharacter::addCharacterCoin(FName Name, int value)
