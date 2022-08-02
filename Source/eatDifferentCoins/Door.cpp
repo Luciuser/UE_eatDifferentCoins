@@ -24,18 +24,7 @@ ADoor::ADoor()
 	{
 		VisualMesh->SetStaticMesh(CubeVisualAsset.Object);
 		VisualMesh->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
-		//VisualMesh->SetCollisionEnabled(ECollisionEnabled::QueryOnly);	// 关闭静态网格体的碰撞
 	}
-
-	//// 碰撞包围盒
-	//BoxComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxComponent"));
-	//BoxComponent->InitBoxExtent(FVector(5, 50, 200));	// 包围盒范围
-	//BoxComponent->SetRelativeLocation(GetActorLocation());	// 包围盒与静态网格体位于同一原点
-	//BoxComponent->SetCollisionProfileName("Trigger");
-	//BoxComponent->SetupAttachment(VisualMesh);
-	//BoxComponent->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);	// 关闭静态网格体的碰撞
-	//BoxComponent->SetCollisionResponseToAllChannels(ECR_Ignore);
-	//BoxComponent->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
 }
 
 // Called when the game starts or when spawned
@@ -54,8 +43,6 @@ void ADoor::Tick(float DeltaTime)
 
 	if (EatCoinGameMode != nullptr && EatCoinGameMode->LevelSuccess) {
 		// 进行开门
-		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("door"));
-
 		if (CurrentNum < 1) {
 			FRotator NewRotation = GetActorRotation();
 			NewRotation.Yaw += 90;

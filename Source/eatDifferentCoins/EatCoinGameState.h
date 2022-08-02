@@ -17,18 +17,9 @@ class EATDIFFERENTCOINS_API AEatCoinGameState : public AGameStateBase
 public:
 	
 	AEatCoinGameState();
-	
-	//UPROPERTY(EditAnywhere)
-	//	bool LevelSuccess = false; // 当前关卡是否成功，默认为false
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:
-	//UFUNCTION()
-	//	void CoinTest();
-
-	//UFUNCTION()
-	//	FText MissionText(FName CurrentLevelName);
 };

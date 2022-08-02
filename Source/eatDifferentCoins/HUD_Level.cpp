@@ -50,7 +50,6 @@ bool UHUD_Level::Initialize() {
 	ButtonQuit = Cast<UButton>(GetWidgetFromName("Button_Quit"));
 
 	if (VerticalBoxButton != nullptr) {
-		//VerticalBoxButton->SetRenderOpacity(0);
 		VerticalBoxButton->SetVisibility(ESlateVisibility::Hidden);	// 默认隐藏
 	}
 	ButtonResumeGame->OnClicked.AddDynamic(this, &UHUD_Level::ButtonResumeGameClickEvent);
@@ -61,7 +60,6 @@ bool UHUD_Level::Initialize() {
 	//-------------------- 提示UI -----------------------//
 	VerticalBoxTips = Cast<UVerticalBox>(GetWidgetFromName("VerticalBox_Tips"));
 	if (VerticalBoxTips != nullptr) {
-		//VerticalBoxButton->SetRenderOpacity(0);
 		VerticalBoxTips->SetVisibility(ESlateVisibility::Hidden);	// 默认隐藏
 		if (MyGameInstance != nullptr) {
 			if (MyGameInstance->CurrentLevel == FName("Level_1")) {

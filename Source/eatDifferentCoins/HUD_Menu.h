@@ -19,12 +19,9 @@ public:
 	virtual bool Initialize() override;
 
 	//Ò³Ãæ¿Ø¼þ
-	//UPROPERTY(meta = (BindWidget))
-		UButton* ButtonStartGame;
-	//UPROPERTY(meta = (BindWidget))
-		UButton* ButtonLoadGame;
-	//UPROPERTY(meta = (BindWidget))
-		UButton* ButtonQuit;
+	UButton* ButtonStartGame;
+	UButton* ButtonLoadGame;
+	UButton* ButtonQuit;
 		
 	UFUNCTION()
 		void ButtonStartGameClickEvent();

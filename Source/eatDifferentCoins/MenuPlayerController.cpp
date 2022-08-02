@@ -13,7 +13,6 @@ AMenuPlayerController::AMenuPlayerController() {
 	InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::LockAlways);
 	InputMode.SetHideCursorDuringCapture(false);
 	SetShowMouseCursor(true);  //ÏÔÊ¾Êó±ê
-	//this->bShowMouseCursor = true;
 }
 
 void AMenuPlayerController::Load()

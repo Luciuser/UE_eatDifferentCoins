@@ -38,47 +38,16 @@ void ABoard::Tick(float DeltaTime)
 
 	//PRINT(FString::FromInt((int)DeltaTime));
 
-	// 硬币随时间跳动并旋转
+	// 平板随时间移动
 	FVector NewLocation = GetActorLocation();
 
 	float RunningTime = GetGameTimeSinceCreation();
 	float DeltaHeight = (FMath::Sin(RunningTime + DeltaTime) - FMath::Sin(RunningTime));
 
-	NewLocation.X += DeltaHeight * XMoveSpeed;	// 硬币随时间跳动
-	NewLocation.Y += DeltaHeight * YMoveSpeed;	// 硬币随时间跳动
-	NewLocation.Z += DeltaHeight * ZMoveSpeed;	// 硬币随时间跳动
+	NewLocation.X += DeltaHeight * XMoveSpeed;	// 平板X方向的移动
+	NewLocation.Y += DeltaHeight * YMoveSpeed;	// 平板Y方向的移动
+	NewLocation.Z += DeltaHeight * ZMoveSpeed;	// 平板Z方向的移动
 
 	SetActorLocationAndRotation(NewLocation, GetActorRotation());	// 设置位置及旋转
-
-
-	//if (this->CurrentTime <= this->MoveTime) {
-	//	FVector NewLocation = GetActorLocation();
-	//	NewLocation.X += XMoveSpeed * this->CurrentTime;
-	//	NewLocation.Y += YMoveSpeed * this->CurrentTime;
-	//	NewLocation.Z += ZMoveSpeed * this->CurrentTime;
-
-	//	SetActorLocationAndRotation(NewLocation, GetActorRotation());	// 设置位置及旋转
-	//}
-	//else if (this->CurrentTime > this->MoveTime &&
-	//	this->CurrentTime <= this->MoveTime + this->StopTime) {
-
-	//}
-	//else if (this->CurrentTime > this->MoveTime + this->StopTime &&
-	//	this->CurrentTime <= this->MoveTime * 2 + this->StopTime) {
-	//	FVector NewLocation = GetActorLocation();
-	//	NewLocation.X -= XMoveSpeed * (this->CurrentTime - this->MoveTime - this->StopTime);
-	//	NewLocation.Y -= YMoveSpeed * (this->CurrentTime - this->MoveTime - this->StopTime);
-	//	NewLocation.Z -= ZMoveSpeed * (this->CurrentTime - this->MoveTime - this->StopTime);
-
-	//	SetActorLocationAndRotation(NewLocation, GetActorRotation());	// 设置位置及旋转
-	//}
-	//else if (this->CurrentTime > this->MoveTime * 2 + this->StopTime &&
-	//	this->CurrentTime <= this->MoveTime * 2 + this->StopTime * 2) {
-
-	//}
-	//else {
-	//	this->CurrentTime = 0;
-	//}
-	//this->CurrentTime += DeltaTime;
 }
 

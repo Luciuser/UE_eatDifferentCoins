@@ -49,9 +49,6 @@ void ALevelUp::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * Oth
 	if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr))
 	{
 		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("level"));
-
-		//AGameStateBase *gameStateBase = UGameplayStatics::GetGameState(GetWorld());	// 获取游戏数据类
-		//AEatCoinGameState *eatCoinGameState = Cast<AEatCoinGameState>(gameStateBase);	// 强制类型转换为子类
 		UWorld* world = GetWorld();
 		AEatCoinGameMode *EatCoinGameMode = Cast<AEatCoinGameMode>(UGameplayStatics::GetGameMode(world));	// 获取GameMode类
 
@@ -69,8 +66,6 @@ void ALevelUp::OnOverlapBegin(UPrimitiveComponent * OverlappedComp, AActor * Oth
 				if (MyGameInstance != nullptr) {
 					MyGameInstance->CurrentLevel = this->NextLevel;
 				}
-				//UGameplayStatics::SetGlobalTimeDilation(world, 0.2);	// 设置全局时间膨胀
-				//FPlatformProcess::Sleep(0.5);
 				//PRINT(FString::FromInt(eatCoinGameState->LevelSuccess));
 				UGameplayStatics::OpenLevel(world, this->NextLevel);	 // 进入下一关
 			}
@@ -86,8 +81,6 @@ void ALevelUp::BeginPlay()
 {
 	Super::BeginPlay();
 
-	
-	
 }
 
 // Called every frame

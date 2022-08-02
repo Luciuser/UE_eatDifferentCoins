@@ -29,7 +29,7 @@ public:
 		float RotationSpeed = 75;	// 硬币旋转速度，默认为75
 
 	UPROPERTY(EditAnywhere)
-		int CoinValue = 1;	// 硬币数量，默认为1
+		int CoinValue = 1;	// 硬币价值，默认为1
 
 	UPROPERTY(EditAnywhere)
 		FName CoinType = FName("GOLD");	// 硬币种类，默认为金币

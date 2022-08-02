@@ -96,13 +96,6 @@ void AeatDifferentCoinsCharacter::SetupPlayerInputComponent(class UInputComponen
 
 void AeatDifferentCoinsCharacter::OnQuit()
 {
-	//AEatCoinPlayerController *EatCoinPlayerController = Cast<AEatCoinPlayerController>(UGameplayStatics::GetPlayerController(this, 0));
-	//if (EatCoinPlayerController != nullptr) {
-	//	EatCoinPlayerController->Save();
-	//	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Game Quit."));
-
-	//	UKismetSystemLibrary::QuitGame(this, EatCoinPlayerController, EQuitPreference::Quit, false);
-	//}
 	AEatCoinGameMode *EatCoinGameMode = Cast<AEatCoinGameMode>(UGameplayStatics::GetGameMode(GetWorld()));	// 获取GameMode类
 	if (EatCoinGameMode != nullptr) {
 		EatCoinGameMode->GameQuit();	// 退出游戏
@@ -111,11 +104,6 @@ void AeatDifferentCoinsCharacter::OnQuit()
 
 void AeatDifferentCoinsCharacter::OnSave()
 {
-	//AEatCoinPlayerController *EatCoinPlayerController = Cast<AEatCoinPlayerController>(UGameplayStatics::GetPlayerController(this, 0));
-	//if (EatCoinPlayerController != nullptr) {
-	//	EatCoinPlayerController->Save();
-	//	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Game Save."));
-	//}
 	AEatCoinGameMode *EatCoinGameMode = Cast<AEatCoinGameMode>(UGameplayStatics::GetGameMode(GetWorld()));	// 获取GameMode类
 	if (EatCoinGameMode != nullptr) {
 		EatCoinGameMode->GameSave();	// 保存游戏
@@ -124,12 +112,6 @@ void AeatDifferentCoinsCharacter::OnSave()
 
 void AeatDifferentCoinsCharacter::OnRestart()
 {
-	//UWorld* World = GetWorld();
-	//UMyGameInstance *MyGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(World)); // 获取当前GameInstance
-	//if (MyGameInstance != nullptr) {
-	//	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Game Restart."));
-	//	UGameplayStatics::OpenLevel(World, MyGameInstance->CurrentLevel);	 // 重新开启当前关卡
-	//}
 	AEatCoinGameMode *EatCoinGameMode = Cast<AEatCoinGameMode>(UGameplayStatics::GetGameMode(GetWorld()));	// 获取GameMode类
 	if (EatCoinGameMode != nullptr) {
 		EatCoinGameMode->GameLevelRestart();	// 重启当前关卡
@@ -138,33 +120,6 @@ void AeatDifferentCoinsCharacter::OnRestart()
 
 void AeatDifferentCoinsCharacter::OnPause()
 {
-	//bPause = !bPause;
-
-	//UGameplayStatics::SetGamePaused(this, bPause);	// 暂停游戏
-
-	//// 显示或关闭暂停界面按钮
-	//AEatCoinHUD *EatCoinHUD = Cast<AEatCoinHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());	// 获取当前 UI 控件
-	//UHUD_Level *HUD = nullptr;
-	//if (EatCoinHUD != nullptr) {
-	//	HUD = EatCoinHUD->HUDWidget;
-	//}
-	//if (HUD != nullptr) {
-	//	if (bPause) {
-	//		HUD->VerticalBoxButton->SetVisibility(ESlateVisibility::Visible);
-	//	}
-	//	else {
-	//		HUD->VerticalBoxButton->SetVisibility(ESlateVisibility::Hidden);
-	//	}
-	//}
-	//else {
-	//	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("WRONG while finding HUD"));
-	//}
-
-	//// 显示鼠标指针
-	//APlayerController* PlayerController = UGameplayStatics::GetPlayerController(GWorld, 0);
-	//if (PlayerController != nullptr) {
-	//	PlayerController->bShowMouseCursor = bPause;
-	//}
 	AEatCoinGameMode *EatCoinGameMode = Cast<AEatCoinGameMode>(UGameplayStatics::GetGameMode(GetWorld()));	// 获取GameMode类
 	if (EatCoinGameMode != nullptr) {
 		EatCoinGameMode->GamePause();	// 暂停游戏
@@ -191,16 +146,6 @@ void AeatDifferentCoinsCharacter::addCharacterCoin(FName Name, int value)
 	if (Name == FName("COPPER")) {
 		this->CopperCoinValue ++;
 	}
-	//this->CoinValue++;
-
-	//// 修改GameInstance
-	//UWorld* world = GetWorld();
-	////UGameplayStatics::GetGameInstance(world);
-	//UMyGameInstance *MyGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(world)); // 获取当前GameInstance
-	//if (MyGameInstance != nullptr) {
-	//	MyGameInstance->CoinValue = this->CoinValue;
-	//	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("just a teset"));
-	//}
 
 	// 修改HUD
 	AEatCoinHUD *EatCoinHUD = Cast<AEatCoinHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());	// 获取当前 UI 控件
@@ -210,7 +155,7 @@ void AeatDifferentCoinsCharacter::addCharacterCoin(FName Name, int value)
 	}
 
 	if (HUD != nullptr) {
-		//HUD->TextTotalCoin->SetText(FText::FromString(FString::FromInt(this->CoinValue)));
+
 		HUD->TextGoldCoin->SetText(FText::FromString(FString::FromInt(this->GoldCoinValue)));
 		HUD->TextSliverCoin->SetText(FText::FromString(FString::FromInt(this->SliverCoinValue)));
 		HUD->TextCopperCoin->SetText(FText::FromString(FString::FromInt(this->CopperCoinValue)));

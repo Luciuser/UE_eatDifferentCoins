@@ -19,9 +19,6 @@ public:
 	UPROPERTY(VisibleAnywhere)
 		UStaticMeshComponent* VisualMesh;	// 静态网格体，直接读取圆锥模型
 
-	//UPROPERTY()
-		//class UBoxComponent* BoxComponent;	// 碰撞包围盒
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

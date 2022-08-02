@@ -6,12 +6,6 @@
 
 AMenuHUD::AMenuHUD() 
 {
-	//// 开启鼠标指针
-	//APlayerController* PlayerController = UGameplayStatics::GetPlayerController(GWorld, 0);
-	//if (PlayerController != nullptr) {
-	//	PlayerController->bShowMouseCursor = true;
-	//}
-
 	if (GEngine && GEngine->GameViewport)
 	{
 		// 找到蓝图类，需要加_C
