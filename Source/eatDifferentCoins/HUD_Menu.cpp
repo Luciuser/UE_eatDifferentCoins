@@ -26,6 +26,11 @@ bool UHUD_Menu::Initialize() {
 void UHUD_Menu::ButtonStartGameClickEvent()
 {
 	AMenuGameMode *MenuGameMode = Cast<AMenuGameMode>(UGameplayStatics::GetGameMode(GetWorld()));	// 获取GameMode类
+	UWorld* world = GetWorld();
+	UMyGameInstance *MyGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(world)); // 获取当前GameInstance
+	if (MyGameInstance != nullptr) {
+		MyGameInstance->CoinValue = 0;	// 初始化
+	}
 	if (MenuGameMode != nullptr) {
 		MenuGameMode->GameStart();	// 开始游戏
 	}
