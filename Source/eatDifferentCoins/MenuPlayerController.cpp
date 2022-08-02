@@ -28,11 +28,6 @@ void AMenuPlayerController::Load()
 		MyGameInstance->CoinValue = SaveGameInstance->CoinValue;
 		MyGameInstance->CurrentLevel = SaveGameInstance->CurrentLevel;
 
-		//PRINT(FString::FromInt(SaveGameInstance->CoinValue));
-		//PRINT(FString::FromInt(MyGameInstance->CoinValue));
-		//PRINT(SaveGameInstance->CurrentLevel.ToString());
-		//PRINT(MyGameInstance->CurrentLevel.ToString());
-
 		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Green, TEXT("Load Game"));
 	}
 	else {

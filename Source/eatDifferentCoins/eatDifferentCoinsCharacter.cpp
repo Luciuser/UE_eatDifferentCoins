@@ -4,10 +4,12 @@
 #include "HUD_Level.h"
 #include "EatCoinHUD.h"
 #include "EatCoinPlayerController.h"
+#include "EatCoinGameMode.h"
 #include "MyGameInstance.h"
 #include "Kismet/GameplayStatics.h"
 #include "HeadMountedDisplayFunctionLibrary.h"
 #include "Camera/CameraComponent.h"
+#include "Components/SlateWrapperTypes.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
 #include "GameFramework/GameModeBase.h"
@@ -94,43 +96,79 @@ void AeatDifferentCoinsCharacter::SetupPlayerInputComponent(class UInputComponen
 
 void AeatDifferentCoinsCharacter::OnQuit()
 {
-	AEatCoinPlayerController *EatCoinPlayerController = Cast<AEatCoinPlayerController>(UGameplayStatics::GetPlayerController(this, 0));
-	if (EatCoinPlayerController != nullptr) {
-		EatCoinPlayerController->Save();
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Game Quit."));
+	//AEatCoinPlayerController *EatCoinPlayerController = Cast<AEatCoinPlayerController>(UGameplayStatics::GetPlayerController(this, 0));
+	//if (EatCoinPlayerController != nullptr) {
+	//	EatCoinPlayerController->Save();
+	//	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Game Quit."));
 
-		UKismetSystemLibrary::QuitGame(this, EatCoinPlayerController, EQuitPreference::Quit, false);
+	//	UKismetSystemLibrary::QuitGame(this, EatCoinPlayerController, EQuitPreference::Quit, false);
+	//}
+	AEatCoinGameMode *EatCoinGameMode = Cast<AEatCoinGameMode>(UGameplayStatics::GetGameMode(GetWorld()));	// 获取GameMode类
+	if (EatCoinGameMode != nullptr) {
+		EatCoinGameMode->GameQuit();	// 退出游戏
 	}
 }
 
 void AeatDifferentCoinsCharacter::OnSave()
 {
-	AEatCoinPlayerController *EatCoinPlayerController = Cast<AEatCoinPlayerController>(UGameplayStatics::GetPlayerController(this, 0));
-	if (EatCoinPlayerController != nullptr) {
-		EatCoinPlayerController->Save();
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Game Save."));
+	//AEatCoinPlayerController *EatCoinPlayerController = Cast<AEatCoinPlayerController>(UGameplayStatics::GetPlayerController(this, 0));
+	//if (EatCoinPlayerController != nullptr) {
+	//	EatCoinPlayerController->Save();
+	//	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Game Save."));
+	//}
+	AEatCoinGameMode *EatCoinGameMode = Cast<AEatCoinGameMode>(UGameplayStatics::GetGameMode(GetWorld()));	// 获取GameMode类
+	if (EatCoinGameMode != nullptr) {
+		EatCoinGameMode->GameSave();	// 保存游戏
 	}
 }
 
 void AeatDifferentCoinsCharacter::OnRestart()
 {
-	UWorld* World = GetWorld();
-	UMyGameInstance *MyGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(World)); // 获取当前GameInstance
-	if (MyGameInstance != nullptr) {
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Game Restart."));
-		UGameplayStatics::OpenLevel(World, MyGameInstance->CurrentLevel);	 // 重新开启当前关卡
+	//UWorld* World = GetWorld();
+	//UMyGameInstance *MyGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(World)); // 获取当前GameInstance
+	//if (MyGameInstance != nullptr) {
+	//	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Game Restart."));
+	//	UGameplayStatics::OpenLevel(World, MyGameInstance->CurrentLevel);	 // 重新开启当前关卡
+	//}
+	AEatCoinGameMode *EatCoinGameMode = Cast<AEatCoinGameMode>(UGameplayStatics::GetGameMode(GetWorld()));	// 获取GameMode类
+	if (EatCoinGameMode != nullptr) {
+		EatCoinGameMode->GameLevelRestart();	// 重启当前关卡
 	}
 }
 
 void AeatDifferentCoinsCharacter::OnPause()
 {
-	bPause = !bPause;
+	//bPause = !bPause;
 
-	UGameplayStatics::SetGamePaused(this, bPause);	// 暂停游戏
+	//UGameplayStatics::SetGamePaused(this, bPause);	// 暂停游戏
 
-	//bShowMouseCursor = bPause;
-	//if (!bPause) SetInputMode(FInputModeGameOnly());
-	//SetPauseUIVisibility(bPause);
+	//// 显示或关闭暂停界面按钮
+	//AEatCoinHUD *EatCoinHUD = Cast<AEatCoinHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());	// 获取当前 UI 控件
+	//UHUD_Level *HUD = nullptr;
+	//if (EatCoinHUD != nullptr) {
+	//	HUD = EatCoinHUD->HUDWidget;
+	//}
+	//if (HUD != nullptr) {
+	//	if (bPause) {
+	//		HUD->VerticalBoxButton->SetVisibility(ESlateVisibility::Visible);
+	//	}
+	//	else {
+	//		HUD->VerticalBoxButton->SetVisibility(ESlateVisibility::Hidden);
+	//	}
+	//}
+	//else {
+	//	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("WRONG while finding HUD"));
+	//}
+
+	//// 显示鼠标指针
+	//APlayerController* PlayerController = UGameplayStatics::GetPlayerController(GWorld, 0);
+	//if (PlayerController != nullptr) {
+	//	PlayerController->bShowMouseCursor = bPause;
+	//}
+	AEatCoinGameMode *EatCoinGameMode = Cast<AEatCoinGameMode>(UGameplayStatics::GetGameMode(GetWorld()));	// 获取GameMode类
+	if (EatCoinGameMode != nullptr) {
+		EatCoinGameMode->GamePause();	// 暂停游戏
+	}
 }
 
 void AeatDifferentCoinsCharacter::addCharacterCoin(FName Name, int value)

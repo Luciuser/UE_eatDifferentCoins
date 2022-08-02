@@ -4,7 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "Components/Button.h"
 #include "Components/TextBlock.h"
+#include "Components/VerticalBox.h"
 #include "HUD_Level.generated.h"
 
 /**
@@ -18,14 +20,29 @@ class EATDIFFERENTCOINS_API UHUD_Level : public UUserWidget
 public:
 	virtual bool Initialize() override;
 
-	//void updateUI();	// 更新UI
+	UFUNCTION()
+		void ButtonResumeGameClickEvent();	// 继续游戏
+	UFUNCTION()
+		void ButtonSaveGameClickEvent();	// 保存游戏
+	UFUNCTION()
+		void ButtonLoadGameClickEvent();	// 读取游戏
+	UFUNCTION()
+		void ButtonQuitClickEvent();	// 退出游戏
 
-	//页面控件
+	// 分数目标等UI
 	UTextBlock* TextTotalCoin;
 	UTextBlock* TextGoldCoin;
 	UTextBlock* TextSliverCoin;
 	UTextBlock* TextCopperCoin;
 	UTextBlock* TextMission;
+
+	// 暂停界面按键
+	UVerticalBox* VerticalBoxButton;
+	UButton* ButtonResumeGame;
+	UButton* ButtonSaveGame;
+	UButton* ButtonLoadGame;
+	UButton* ButtonQuit;
+
 
 	//AeatDifferentCoinsCharacter *eatCoinPlayerCharacter;	// 玩家类
 };

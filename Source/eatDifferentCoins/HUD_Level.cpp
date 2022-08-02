@@ -1,8 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
+#include "HUD_Menu.h"
 #include "HUD_Level.h"
 #include "MyGameInstance.h"
+#include "Components/SlateWrapperTypes.h"
 #include "EatCoinGameMode.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -11,9 +13,7 @@
 bool UHUD_Level::Initialize() {
 	Super::Initialize();
 
-	//ACharacter *playerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);	// 获取玩家类
-	//eatCoinPlayerCharacter = Cast<AeatDifferentCoinsCharacter>(playerCharacter);	// 强制类型转换为子类
-
+	//-------------------- 分数数据等UI -----------------------//
 	TextTotalCoin = Cast<UTextBlock>(GetWidgetFromName("Text_Get_Total_Coin"));
 	TextGoldCoin = Cast<UTextBlock>(GetWidgetFromName("Text_Get_Gold_Coin"));
 	TextSliverCoin = Cast<UTextBlock>(GetWidgetFromName("Text_Get_Yin_Coin"));
@@ -38,32 +38,60 @@ bool UHUD_Level::Initialize() {
 	if (TextCopperCoin != nullptr) {
 		TextCopperCoin->SetText(FText::FromString("0"));
 	}
-	if (TextMission != nullptr) {
+	if (TextMission != nullptr && EatCoinGameMode != nullptr && MyGameInstance != nullptr) {
 		TextMission->SetText(EatCoinGameMode->MissionText(MyGameInstance->CurrentLevel));
 	}
 
-	//updateUI();
+	//-------------------- 暂停界面按钮 -----------------------//
+	VerticalBoxButton = Cast<UVerticalBox>(GetWidgetFromName("VerticalBox_Button"));
+	ButtonResumeGame = Cast<UButton>(GetWidgetFromName("Button_ResumeGame"));
+	ButtonSaveGame = Cast<UButton>(GetWidgetFromName("Button_SaveGame"));
+	ButtonLoadGame = Cast<UButton>(GetWidgetFromName("Button_LoadGame"));
+	ButtonQuit = Cast<UButton>(GetWidgetFromName("Button_Quit"));
+
+	if (VerticalBoxButton != nullptr) {
+		//VerticalBoxButton->SetRenderOpacity(0);
+		VerticalBoxButton->SetVisibility(ESlateVisibility::Hidden);	// 默认隐藏
+	}
+	ButtonResumeGame->OnClicked.AddDynamic(this, &UHUD_Level::ButtonResumeGameClickEvent);
+	ButtonSaveGame->OnClicked.AddDynamic(this, &UHUD_Level::ButtonSaveGameClickEvent);
+	ButtonLoadGame->OnClicked.AddDynamic(this, &UHUD_Level::ButtonLoadGameClickEvent);
+	ButtonQuit->OnClicked.AddDynamic(this, &UHUD_Level::ButtonQuitClickEvent);
 
 	return true;
 }
 
-//void UHUD_Level::updateUI()
-//{
-//	if (TextTotalCoin != nullptr) {
-//		TextTotalCoin->SetText(FText::FromString(FString::FromInt(eatCoinPlayerCharacter->CoinValue)));
-//	}
-//	if (TextGoldCoin != nullptr) {
-//		TextGoldCoin->SetText(FText::FromString(FString::FromInt(eatCoinPlayerCharacter->GoldCoinValue)));
-//	}
-//	if (TextSliverCoin != nullptr) {
-//		TextSliverCoin->SetText(FText::FromString(FString::FromInt(eatCoinPlayerCharacter->SliverCoinValue)));
-//	}
-//	if (TextCopperCoin != nullptr) {
-//		TextCopperCoin->SetText(FText::FromString(FString::FromInt(eatCoinPlayerCharacter->CopperCoinValue)));
-//	}
-//	if (TextMission != nullptr) {
-//		TextMission->SetText(FText::FromString("test"));
-//	}
-//}
+void UHUD_Level::ButtonResumeGameClickEvent()
+{
+	AEatCoinGameMode *EatCoinGameMode = Cast<AEatCoinGameMode>(UGameplayStatics::GetGameMode(GetWorld()));	// 获取GameMode类
+	if (EatCoinGameMode != nullptr) {
+		EatCoinGameMode->GamePause();	// 暂停游戏/继续游戏
+	}
+}
+
+void UHUD_Level::ButtonSaveGameClickEvent()
+{
+	AEatCoinGameMode *EatCoinGameMode = Cast<AEatCoinGameMode>(UGameplayStatics::GetGameMode(GetWorld()));	// 获取GameMode类
+	if (EatCoinGameMode != nullptr) {
+		EatCoinGameMode->GameSave();	// 保存游戏
+	}
+}
+
+void UHUD_Level::ButtonLoadGameClickEvent()
+{
+	AEatCoinGameMode *EatCoinGameMode = Cast<AEatCoinGameMode>(UGameplayStatics::GetGameMode(GetWorld()));	// 获取GameMode类
+	if (EatCoinGameMode != nullptr) {
+		EatCoinGameMode->GameLoad();	// 读取游戏
+	}
+}
+
+void UHUD_Level::ButtonQuitClickEvent()
+{
+	AEatCoinGameMode *EatCoinGameMode = Cast<AEatCoinGameMode>(UGameplayStatics::GetGameMode(GetWorld()));	// 获取GameMode类
+	if (EatCoinGameMode != nullptr) {
+		EatCoinGameMode->GameQuit();	// 退出游戏
+	}
+}
+
 
 #undef LOCTEXT_NAMESPACE // 注意：必须取消宏定义

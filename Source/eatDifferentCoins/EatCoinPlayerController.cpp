@@ -38,15 +38,25 @@ void AEatCoinPlayerController::Save()
 void AEatCoinPlayerController::Load()
 {
 	UMySaveGame * SaveGameInstance = Cast<UMySaveGame>(UGameplayStatics::CreateSaveGameObject(UMySaveGame::StaticClass()));
-
-	SaveGameInstance = Cast<UMySaveGame>(UGameplayStatics::LoadGameFromSlot("MySlot", 0));	// 从插槽中读取
+	SaveGameInstance = Cast<UMySaveGame>(UGameplayStatics::LoadGameFromSlot("MySlot", 0));
 
 	UWorld* world = GetWorld();
 	UMyGameInstance *MyGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(world)); // 获取当前GameInstance
+	if (SaveGameInstance != nullptr) {
 
-	MyGameInstance->CoinValue = SaveGameInstance->CoinValue;
-	MyGameInstance->CurrentLevel = SaveGameInstance->CurrentLevel;
+		MyGameInstance->CoinValue = SaveGameInstance->CoinValue;
+		MyGameInstance->CurrentLevel = SaveGameInstance->CurrentLevel;
 
-	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Green, TEXT("Load Game"));
+		//PRINT(FString::FromInt(SaveGameInstance->CoinValue));
+		//PRINT(FString::FromInt(MyGameInstance->CoinValue));
+		//PRINT(SaveGameInstance->CurrentLevel.ToString());
+		//PRINT(MyGameInstance->CurrentLevel.ToString());
+
+		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Green, TEXT("Load Game now"));
+	}
+	else {
+		MyGameInstance->CoinValue = 0;
+		MyGameInstance->CurrentLevel = FName("Level_1");
+	}
 
 }

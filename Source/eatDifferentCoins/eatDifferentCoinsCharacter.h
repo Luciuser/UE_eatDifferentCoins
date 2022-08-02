@@ -39,9 +39,11 @@ public:
 	UPROPERTY(EditAnywhere)
 		int CopperCoinValue = 0;	// 铜币数量，默认为0
 	UPROPERTY(EditAnywhere)
-		bool bPause = false;
+		bool bPause = false;	// 判断是否暂停
+
+	// 增加玩家身上的各种金币数量
 	UFUNCTION()
-		void addCharacterCoin(FName Name, int value);	// 增加玩家身上的各种金币数量
+		void addCharacterCoin(FName Name, int value);
 
 protected:
 

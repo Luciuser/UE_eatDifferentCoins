@@ -41,7 +41,78 @@ void AEatCoinGameMode::CoinTest(FName CurrentLevelName)
 			this->LevelSuccess = true;
 		}
 	}
+}
 
+void AEatCoinGameMode::GameLevelRestart()
+{
+	UWorld* World = GetWorld();
+	UMyGameInstance *MyGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(World)); // 获取当前GameInstance
+	if (MyGameInstance != nullptr) {
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Game Restart."));
+		UGameplayStatics::OpenLevel(World, MyGameInstance->CurrentLevel);	 // 重新开启当前关卡
+	}
+}
+
+void AEatCoinGameMode::GameSave()
+{
+	AEatCoinPlayerController *EatCoinPlayerController = Cast<AEatCoinPlayerController>(UGameplayStatics::GetPlayerController(this, 0));
+	if (EatCoinPlayerController != nullptr) {
+		EatCoinPlayerController->Save();
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Game Save."));
+	}
+}
+
+void AEatCoinGameMode::GameLoad()
+{
+	AEatCoinPlayerController *EatCoinPlayerController = Cast<AEatCoinPlayerController>(UGameplayStatics::GetPlayerController(this, 0));
+	if (EatCoinPlayerController != nullptr) {
+		EatCoinPlayerController->Load();
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Game Load."));
+		UWorld* world = GetWorld();
+		UMyGameInstance *MyGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(world)); // 获取当前GameInstance
+		UGameplayStatics::OpenLevel(world, MyGameInstance->CurrentLevel);	 // 进入存储的关卡
+	}
+}
+
+void AEatCoinGameMode::GameQuit()
+{
+	AEatCoinPlayerController *EatCoinPlayerController = Cast<AEatCoinPlayerController>(UGameplayStatics::GetPlayerController(this, 0));
+	if (EatCoinPlayerController != nullptr) {
+		//EatCoinPlayerController->Save();
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Game Quit."));
+		UKismetSystemLibrary::QuitGame(this, EatCoinPlayerController, EQuitPreference::Quit, false);
+	}
+}
+
+void AEatCoinGameMode::GamePause()
+{
+	bPause = !bPause;
+
+	UGameplayStatics::SetGamePaused(this, bPause);	// 暂停游戏
+
+	// 显示或关闭暂停界面按钮
+	AEatCoinHUD *EatCoinHUD = Cast<AEatCoinHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());	// 获取当前 UI 控件
+	UHUD_Level *HUD = nullptr;
+	if (EatCoinHUD != nullptr) {
+		HUD = EatCoinHUD->HUDWidget;
+	}
+	if (HUD != nullptr) {
+		if (bPause) {
+			HUD->VerticalBoxButton->SetVisibility(ESlateVisibility::Visible);
+		}
+		else {
+			HUD->VerticalBoxButton->SetVisibility(ESlateVisibility::Hidden);
+		}
+	}
+	else {
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("WRONG while finding HUD"));
+	}
+
+	// 显示鼠标指针
+	APlayerController* PlayerController = UGameplayStatics::GetPlayerController(GWorld, 0);
+	if (PlayerController != nullptr) {
+		PlayerController->bShowMouseCursor = bPause;
+	}
 }
 
 FText AEatCoinGameMode::MissionText(FName CurrentLevelName)
