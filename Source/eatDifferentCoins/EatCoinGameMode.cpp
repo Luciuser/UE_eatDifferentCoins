@@ -50,10 +50,10 @@ FText AEatCoinGameMode::MissionText(FName CurrentLevelName)
 		return FText::FromString("goal: collect 5 copper coins.");
 	}
 	if (CurrentLevelName == FName("Level_2")) {
-		return FText::FromString("goal: collect 5 sliver coins or 3 gold sliver.");
+		return FText::FromString("goal: collect 5 sliver coins or 3 gold coins.");
 	}
 	if (CurrentLevelName == FName("Level_3")) {
-		return FText::FromString("goal: collect 20 scores.");
+		return FText::FromString("goal: collect 30 scores.");
 	}
 
 	return FText();
