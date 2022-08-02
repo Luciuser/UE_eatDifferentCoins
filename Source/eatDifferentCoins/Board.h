@@ -28,17 +28,17 @@ public:
 	UPROPERTY(EditAnywhere)
 		float ZMoveSpeed = 1;	// 板沿着Z方向移动速度
 
-	UPROPERTY(EditAnywhere)
-		float MoveTime = 2;	// 板移动时间
+	//UPROPERTY(EditAnywhere)
+	//	float MoveTime = 2;	// 板移动时间
 
-	UPROPERTY(EditAnywhere)
-		float StopTime = 2;	// 板停滞时间
+	//UPROPERTY(EditAnywhere)
+	//	float StopTime = 2;	// 板停滞时间
 
-	UPROPERTY(EditAnywhere)
-		float CurrentTime = 0;	// 板当前时间
+	//UPROPERTY(EditAnywhere)
+	//	float CurrentTime = 0;	// 板当前时间
 
-	UPROPERTY(EditAnywhere)
-		int DeltaTimeSign = 1;	// Delta时间的符号
+	//UPROPERTY(EditAnywhere)
+	//	int DeltaTimeSign = 1;	// Delta时间的符号
 
 protected:
 	// Called when the game starts or when spawned

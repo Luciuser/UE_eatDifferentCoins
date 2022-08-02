@@ -1,8 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "HUD_Menu.h"
 #include "HUD_Level.h"
+#include "HUD_Menu.h"
 #include "MyGameInstance.h"
 #include "Components/SlateWrapperTypes.h"
 #include "EatCoinGameMode.h"

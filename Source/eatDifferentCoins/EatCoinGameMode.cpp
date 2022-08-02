@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "MyGameInstance.h"
 #include "EatCoinGameMode.h"
+#include "MyGameInstance.h"
 #include "EatCoinPlayerController.h"
 #include "EatCoinGameState.h"
 #include "eatDifferentCoinsCharacter.h"
@@ -37,11 +37,35 @@ void AEatCoinGameMode::CoinTest(FName CurrentLevelName)
 		}
 	}
 	if (CurrentLevelName == FName("Level_3")) {
-		if (MyGameInstance->CoinValue >= 30) {
+		if (MyGameInstance->CoinValue >= 30 && eatCoinPlayerCharacter->GoldCoinValue + eatCoinPlayerCharacter->SliverCoinValue + eatCoinPlayerCharacter->CopperCoinValue >= 5) {
+			this->LevelSuccess = true;
+		}
+	}
+	if (CurrentLevelName == FName("Level_4")) {
+		if (eatCoinPlayerCharacter->GoldCoinValue + eatCoinPlayerCharacter->SliverCoinValue + eatCoinPlayerCharacter->CopperCoinValue >= 5) {
 			this->LevelSuccess = true;
 		}
 	}
 }
+
+FText AEatCoinGameMode::MissionText(FName CurrentLevelName)
+{
+	if (CurrentLevelName == FName("Level_1")) {
+		return FText::FromString("goal: collect 5 copper coins.");
+	}
+	if (CurrentLevelName == FName("Level_2")) {
+		return FText::FromString("goal: collect 5 sliver coins OR 3 gold coins.");
+	}
+	if (CurrentLevelName == FName("Level_3")) {
+		return FText::FromString("goal: collect 30 scores AND 5 coins.");
+	}
+	if (CurrentLevelName == FName("Level_4")) {
+		return FText::FromString("goal: collect 5 coins AND do NOT fall into the water.");
+	}
+
+	return FText();
+}
+
 
 void AEatCoinGameMode::GameLevelRestart()
 {
@@ -137,20 +161,4 @@ void AEatCoinGameMode::GameOpenTips()
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("WRONG while finding HUD"));
 	}
 }
-
-FText AEatCoinGameMode::MissionText(FName CurrentLevelName)
-{
-	if (CurrentLevelName == FName("Level_1")) {
-		return FText::FromString("goal: collect 5 copper coins.");
-	}
-	if (CurrentLevelName == FName("Level_2")) {
-		return FText::FromString("goal: collect 5 sliver coins or 3 gold coins.");
-	}
-	if (CurrentLevelName == FName("Level_3")) {
-		return FText::FromString("goal: collect 30 scores.");
-	}
-
-	return FText();
-}
-
 #undef LOCTEXT_NAMESPACE // 注意：必须取消宏定义

@@ -29,11 +29,15 @@ void AMenuGameMode::GameLoad()
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Game Load."));
 
 	AMenuPlayerController *MenuPlayerController = Cast<AMenuPlayerController>(UGameplayStatics::GetPlayerController(this, 0));
+	UWorld* world = GetWorld();
+	UMyGameInstance *MyGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(world)); // 获取当前GameInstance
 	if (MenuPlayerController != nullptr) {
 		MenuPlayerController->Load();
 	}
-	UWorld* world = GetWorld();
-	UMyGameInstance *MyGameInstance = Cast<UMyGameInstance>(UGameplayStatics::GetGameInstance(world)); // 获取当前GameInstance
+	else {
+		MyGameInstance->CoinValue = 0;
+		MyGameInstance->CurrentLevel = FName("Level_1");
+	}
 	UGameplayStatics::OpenLevel(world, MyGameInstance->CurrentLevel);	 // 进入存储的关卡
 }
 

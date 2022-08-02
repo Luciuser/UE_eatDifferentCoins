@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "eatDifferentCoinsCharacter.h"
 #include "EatCoinGameState.h"
+#include "eatDifferentCoinsCharacter.h"
 #include "Kismet/GameplayStatics.h"
 
 AEatCoinGameState::AEatCoinGameState()
