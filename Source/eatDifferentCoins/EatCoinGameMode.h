@@ -45,9 +45,13 @@ public:
 	UFUNCTION()
 		void GameOpenTips();
 
-	// 不同关卡的文本数据
+	// 不同关卡的任务文本数据
 	UFUNCTION()
 		FText MissionText(FName CurrentLevelName);
+
+	// 不同关卡的关卡文本数据
+	UFUNCTION()
+		FText MissionCurretLevel(FName CurrentLevelName);
 
 	UPROPERTY(EditAnywhere)
 		bool LevelSuccess = false; // 当前关卡是否成功，默认为false

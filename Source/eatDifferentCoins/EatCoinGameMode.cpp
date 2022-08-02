@@ -66,6 +66,23 @@ FText AEatCoinGameMode::MissionText(FName CurrentLevelName)
 	return FText();
 }
 
+FText AEatCoinGameMode::MissionCurretLevel(FName CurrentLevelName)
+{
+	if (CurrentLevelName == FName("Level_1")) {
+		return FText::FromString("1");
+	}
+	if (CurrentLevelName == FName("Level_2")) {
+		return FText::FromString("2");
+	}
+	if (CurrentLevelName == FName("Level_3")) {
+		return FText::FromString("3");
+	}
+	if (CurrentLevelName == FName("Level_4")) {
+		return FText::FromString("4");
+	}
+
+	return FText();
+}
 
 void AEatCoinGameMode::GameLevelRestart()
 {

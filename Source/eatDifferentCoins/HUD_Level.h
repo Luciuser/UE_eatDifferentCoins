@@ -30,6 +30,7 @@ public:
 		void ButtonQuitClickEvent();	// 退出游戏
 
 	// 分数目标等UI
+	UTextBlock* TextCurrentLevel;
 	UTextBlock* TextTotalCoin;
 	UTextBlock* TextGoldCoin;
 	UTextBlock* TextSliverCoin;

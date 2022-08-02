@@ -8,12 +8,11 @@
 #include "EatCoinGameMode.h"
 #include "Kismet/GameplayStatics.h"
 
-#define LOCTEXT_NAMESPACE "EAT_COIN"
-
 bool UHUD_Level::Initialize() {
 	Super::Initialize();
 
 	//-------------------- 分数数据等UI -----------------------//
+	TextCurrentLevel = Cast<UTextBlock>(GetWidgetFromName("Text_Get_Level"));
 	TextTotalCoin = Cast<UTextBlock>(GetWidgetFromName("Text_Get_Total_Coin"));
 	TextGoldCoin = Cast<UTextBlock>(GetWidgetFromName("Text_Get_Gold_Coin"));
 	TextSliverCoin = Cast<UTextBlock>(GetWidgetFromName("Text_Get_Yin_Coin"));
@@ -29,6 +28,9 @@ bool UHUD_Level::Initialize() {
 		TextTotalCoin->SetText(FText::FromString(FString::FromInt(MyGameInstance->CoinValue)));
 	}
 	// 设置 UI 默认值
+	if (TextCurrentLevel != nullptr && EatCoinGameMode != nullptr && MyGameInstance != nullptr) {
+		TextCurrentLevel->SetText(EatCoinGameMode->MissionCurretLevel(MyGameInstance->CurrentLevel));
+	}
 	if (TextGoldCoin != nullptr) {
 		TextGoldCoin->SetText(FText::FromString("0"));
 	}
@@ -102,6 +104,3 @@ void UHUD_Level::ButtonQuitClickEvent()
 		EatCoinGameMode->GameQuit();	// 退出游戏
 	}
 }
-
-
-#undef LOCTEXT_NAMESPACE // 注意：必须取消宏定义
