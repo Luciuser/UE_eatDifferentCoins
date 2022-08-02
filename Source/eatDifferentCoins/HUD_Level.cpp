@@ -58,6 +58,18 @@ bool UHUD_Level::Initialize() {
 	ButtonLoadGame->OnClicked.AddDynamic(this, &UHUD_Level::ButtonLoadGameClickEvent);
 	ButtonQuit->OnClicked.AddDynamic(this, &UHUD_Level::ButtonQuitClickEvent);
 
+	//-------------------- 提示UI -----------------------//
+	VerticalBoxTips = Cast<UVerticalBox>(GetWidgetFromName("VerticalBox_Tips"));
+	if (VerticalBoxTips != nullptr) {
+		//VerticalBoxButton->SetRenderOpacity(0);
+		VerticalBoxTips->SetVisibility(ESlateVisibility::Hidden);	// 默认隐藏
+		if (MyGameInstance != nullptr) {
+			if (MyGameInstance->CurrentLevel == FName("Level_1")) {
+				VerticalBoxTips->SetVisibility(ESlateVisibility::Visible);	// 默认隐藏
+			}
+		}
+	}
+
 	return true;
 }
 

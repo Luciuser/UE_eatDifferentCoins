@@ -90,7 +90,7 @@ void AeatDifferentCoinsCharacter::SetupPlayerInputComponent(class UInputComponen
 	PlayerInputComponent->BindAction("Save", IE_Pressed, this, &AeatDifferentCoinsCharacter::OnSave);
 	PlayerInputComponent->BindAction("Restart", IE_Pressed, this, &AeatDifferentCoinsCharacter::OnRestart);
 	PlayerInputComponent->BindAction("Pause", IE_Pressed, this, &AeatDifferentCoinsCharacter::OnPause).bExecuteWhenPaused = true;
-
+	PlayerInputComponent->BindAction("Help", IE_Pressed, this, &AeatDifferentCoinsCharacter::OnOpenTips);
 
 }
 
@@ -168,6 +168,14 @@ void AeatDifferentCoinsCharacter::OnPause()
 	AEatCoinGameMode *EatCoinGameMode = Cast<AEatCoinGameMode>(UGameplayStatics::GetGameMode(GetWorld()));	// 获取GameMode类
 	if (EatCoinGameMode != nullptr) {
 		EatCoinGameMode->GamePause();	// 暂停游戏
+	}
+}
+
+void AeatDifferentCoinsCharacter::OnOpenTips()
+{
+	AEatCoinGameMode *EatCoinGameMode = Cast<AEatCoinGameMode>(UGameplayStatics::GetGameMode(GetWorld()));	// 获取GameMode类
+	if (EatCoinGameMode != nullptr) {
+		EatCoinGameMode->GameOpenTips();	// 暂停游戏
 	}
 }
 

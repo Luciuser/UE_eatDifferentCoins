@@ -43,6 +43,8 @@ public:
 	UButton* ButtonLoadGame;
 	UButton* ButtonQuit;
 
+	// 提示UI
+	UVerticalBox* VerticalBoxTips;
 
 	//AeatDifferentCoinsCharacter *eatCoinPlayerCharacter;	// 玩家类
 };

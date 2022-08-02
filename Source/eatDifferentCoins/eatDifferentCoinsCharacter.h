@@ -86,6 +86,9 @@ protected:
 	/**游戏暂停函数 */
 	void OnPause();
 
+	/**游戏提示开关 */
+	void OnOpenTips();
+
 protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;

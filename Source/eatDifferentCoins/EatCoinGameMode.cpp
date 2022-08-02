@@ -115,6 +115,29 @@ void AEatCoinGameMode::GamePause()
 	}
 }
 
+void AEatCoinGameMode::GameOpenTips()
+{
+	// 显示或关闭暂停界面按钮
+	AEatCoinHUD *EatCoinHUD = Cast<AEatCoinHUD>(UGameplayStatics::GetPlayerController(this, 0)->GetHUD());	// 获取当前 UI 控件
+	UHUD_Level *HUD = nullptr;
+	if (EatCoinHUD != nullptr) {
+		HUD = EatCoinHUD->HUDWidget;
+	}
+	if (HUD != nullptr) {
+		if (bTips) {
+			HUD->VerticalBoxTips->SetVisibility(ESlateVisibility::Visible);
+			bTips = false;
+		}
+		else {
+			HUD->VerticalBoxTips->SetVisibility(ESlateVisibility::Hidden);
+			bTips = true;
+		}
+	}
+	else {
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("WRONG while finding HUD"));
+	}
+}
+
 FText AEatCoinGameMode::MissionText(FName CurrentLevelName)
 {
 	if (CurrentLevelName == FName("Level_1")) {

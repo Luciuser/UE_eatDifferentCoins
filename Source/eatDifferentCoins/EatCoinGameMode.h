@@ -41,6 +41,10 @@ public:
 	UFUNCTION()
 		void GamePause();
 
+	// 打开提示
+	UFUNCTION()
+		void GameOpenTips();
+
 	// 不同关卡的文本数据
 	UFUNCTION()
 		FText MissionText(FName CurrentLevelName);
@@ -50,4 +54,6 @@ public:
 
 	UPROPERTY(EditAnywhere)
 		bool bPause = false;	// 判断是否暂停
+	UPROPERTY(EditAnywhere)
+		bool bTips = false;	// 判断是否打开tips
 };
